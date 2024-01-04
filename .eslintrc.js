@@ -3,9 +3,15 @@ module.exports = {
         es2021: true,
         node: true,
     },
-    plugins: ['prettier'],
-    extends: ['standard-with-typescript', 'prettier'],
-    project: ['./tsconfig.json'],
+    parser: '@typescript-eslint/parser',
+    plugins: ['prettier', '@typescript-eslint'],
+    extends: [
+        'standard-with-typescript',
+        'prettier',
+        'eslint:recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+    ],
     overrides: [
         {
             env: {
