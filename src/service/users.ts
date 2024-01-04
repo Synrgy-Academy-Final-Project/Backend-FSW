@@ -4,7 +4,7 @@ import { UserRepository } from '../repository/users'
 export class UserService {
     public userRepository: UserRepository
 
-    constructor() {
+    public constructor() {
         this.userRepository = new UserRepository()
     }
 
