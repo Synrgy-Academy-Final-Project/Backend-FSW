@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Install package
-              run: npm ci
+              run: npm install
             - name: Create public & private key jwt
               run: npm run keys
             - uses: actions/checkout@v3
