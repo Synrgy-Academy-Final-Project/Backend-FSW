@@ -8,7 +8,7 @@ jobs:
         name: Deploy app
         runs-on: ubuntu-latest
         steps:
-            - uses: create keys jwt
+            - uses: create keys for jwt
             - run: npm run keys
             - uses: actions/checkout@v3
             - uses: superfly/flyctl-actions/setup-flyctl@master
