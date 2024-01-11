@@ -2,7 +2,7 @@
   "name": "backend-fsw",
   "version": "1.0.0",
   "description": "Backend Final Project RESTful API",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "npx tsc",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
