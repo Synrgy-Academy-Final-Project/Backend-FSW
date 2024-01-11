@@ -30,6 +30,9 @@ COPY --link . .
 # Build application
 RUN npm run build
 
+# Create Keys JWT
+RUN npm run keys
+
 # Remove development dependencies
 RUN npm prune --omit=dev
 
