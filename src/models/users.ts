@@ -7,7 +7,7 @@ import { UsersDetailsModel } from './usersDetails'
 export class UsersModel extends Model {
     id!: UUID
     email!: string
-    name!: string
+    full_name!: string
     password!: string
     role_id!: string
     user_detail_id!: UUID
@@ -16,6 +16,9 @@ export class UsersModel extends Model {
     otp_generated_time!: EpochTimeStamp
     created_date!: EpochTimeStamp
     updated_date!: EpochTimeStamp
+
+    // type for join table or relationship
+    role_name!: string
 
     static readonly tableName = 'users'
 
