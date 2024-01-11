@@ -1,25 +1,53 @@
+import type { UUID } from 'crypto'
 import { Model } from 'objection'
 import type { JSONSchema, ModelObject } from 'objection'
+import { RolesModel } from './roles'
+import { UsersDetailsModel } from './usersDetails'
 
 export class UsersModel extends Model {
-    // membuat type Users
-    id!: number
+    id!: UUID
     email!: string
     name!: string
     password!: string
-    role!: string
+    role_id!: string
+    user_detail_id!: UUID
+    otp!: string
+    active!: boolean
+    otp_generated_time!: EpochTimeStamp
+    created_date!: EpochTimeStamp
+    updated_date!: EpochTimeStamp
 
     static readonly tableName = 'users'
+
     // validasi http request body
     static get jsonSchema(): JSONSchema {
         return {
             type: 'object',
-            required: ['email', 'name', 'password'],
+            required: ['email', 'password'],
             properties: {
-                name: { type: 'string', minLength: 3 },
+                email: { type: 'string', minLength: 3 },
                 password: { type: 'string', minLength: 6 },
             },
         }
+    }
+
+    static relationMappings = {
+        roles: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: RolesModel,
+            join: {
+                from: 'users.role_id',
+                to: 'roles.id',
+            },
+        },
+        users_details: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: UsersDetailsModel,
+            join: {
+                from: 'users.user_detail_id',
+                to: 'users_details.id',
+            },
+        },
     }
 }
 
