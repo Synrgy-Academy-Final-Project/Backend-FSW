@@ -49,15 +49,30 @@ router.get('/', homeController.index)
  *                token:
  *                  type: string
  *      404:
- *        description: Not Found
+ *        description: Not Found User
  *        content:
  *          application/json:
  *            schema:
  *              type: object
  *              properties:
- *                message:
- *                  type: string
- *                  example: Email or Password is wrong
+ *                err:
+ *                  type: object
+ *                  properties:
+ *                      type:
+ *                          type: string
+ *                          example: NotFound
+ *                      name:
+ *                          type: string
+ *                          example: NotFoundError
+ *                      data:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: Email or Password is Wrong
+ *                      statusCode:
+ *                          type: number
+ *                          example: 404
  */
 router.post('/api/v1/auth/login', userController.login)
 
