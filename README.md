@@ -21,3 +21,11 @@ $ npm run knex seed:make seed_name                  # create new file seeds
 $ npm run knex seed:run --specific=filename.ts      # run seed with specific filename
 $ npm run keys                                      # create private and public key jwt, no passphrase
 ```
+
+## Account Login Admin
+```json
+{
+  "email": "mizz@gmail.com",
+  "password": "mizz",
+}
+```
