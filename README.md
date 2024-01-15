@@ -23,9 +23,16 @@ $ npm run keys                                      # create private and public 
 ```
 
 ## Account Login Admin
+
 ```json
 {
-  "email": "mizz@gmail.com",
-  "password": "mizz",
+    "email": "mizz@gmail.com",
+    "password": "mizz"
 }
+```
+
+## Run remote database fly
+
+```
+$ fly proxy 5432 -a backend-fsw-db
 ```
