@@ -66,4 +66,8 @@ export class UserController {
             })
         }
     }
+
+    profile = async (req: Request, res: Response): Promise<Response<unknown, Record<string, unknown>>> => {
+        return res.status(200).json(req.user)
+    }
 }
