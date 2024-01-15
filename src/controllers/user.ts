@@ -28,7 +28,13 @@ export class UserController {
             }
             // token will expire in one hour
             const token = jwt.sign(
-                { id: user[0].id, email: user[0].email, name: user[0].full_name, role: user[0].role_name },
+                {
+                    id: user[0].id,
+                    email: user[0].email,
+                    name: user[0].full_name,
+                    role: user[0].role_name,
+                    active: user[0].active,
+                },
                 this.privateKey,
                 {
                     expiresIn: '1h',
