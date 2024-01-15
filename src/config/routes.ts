@@ -4,6 +4,7 @@ import { HomeController } from '../controllers/home'
 import { UserController } from '../controllers/user'
 import { swaggerSpec } from './swagger'
 import swaggerUI from 'swagger-ui-express'
+import { authToken } from '../middlewares/authToken'
 
 const router = express.Router()
 
@@ -21,7 +22,7 @@ router.get('/', homeController.index)
  *    summary: Login a user
  *    description: Login for role admin
  *    tags:
- *      - Users
+ *      - Auth
  *    requestBody:
  *      required: true
  *      content:
@@ -75,6 +76,52 @@ router.get('/', homeController.index)
  *                          example: 404
  */
 router.post('/api/v1/auth/login', userController.login)
+
+/**
+ * @openapi
+ * /api/v1/users/profile:
+ *  get:
+ *    summary: Get current user
+ *    description: Get profile user
+ *    tags:
+ *      - Users
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                id:
+ *                  type: number
+ *                email:
+ *                  type: string
+ *                  format: email
+ *                name:
+ *                  type: string
+ *                role:
+ *                  type: string
+ *                active:
+ *                  type: boolean
+ *                iat:
+ *                  type: number
+ *                exp:
+ *                  type: number
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid token
+ */
+router.get('/api/v1/users/profile', authToken, userController.profile)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
