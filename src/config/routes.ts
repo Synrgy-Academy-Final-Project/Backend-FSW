@@ -5,11 +5,13 @@ import { UserController } from '../controllers/user'
 import { swaggerSpec } from './swagger'
 import swaggerUI from 'swagger-ui-express'
 import { authToken } from '../middlewares/authToken'
+import { PaymentController } from '../controllers/payment'
 
 const router = express.Router()
 
 const homeController = new HomeController()
 const userController = new UserController()
+const paymentController = new PaymentController()
 
 // list route
 
@@ -100,7 +102,9 @@ router.post('/api/v1/auth/login', userController.login)
  *                email:
  *                  type: string
  *                  format: email
- *                name:
+ *                first_name:
+ *                  type: string
+ *                last_name:
  *                  type: string
  *                role:
  *                  type: string
@@ -122,6 +126,49 @@ router.post('/api/v1/auth/login', userController.login)
  *                  example: Invalid token
  */
 router.get('/api/v1/users/profile', authToken, userController.profile)
+
+/**
+ * @openapi
+ * /api/v1/summary/trx/success:
+ *  get:
+ *    summary: Get transaction success
+ *    description: Get summary transaction success
+ *    tags:
+ *      - Summary
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                  type: object
+ *                  properties:
+ *                      month:
+ *                          type: string
+ *                      status_code:
+ *                          type: number
+ *                      transaction_status:
+ *                          type: string
+ *                      transaction_count:
+ *                          type: string
+ *                      transaction_amount:
+ *                          type: number
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/summary/trx/success', authToken, paymentController.getTransactionSuccess)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
