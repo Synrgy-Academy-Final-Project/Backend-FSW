@@ -1,24 +1,27 @@
 import type { UUID } from 'crypto'
 import { Model } from 'objection'
-import type { JSONSchema, ModelObject } from 'objection'
+import type { JSONSchema, ModelObject, RelationMappings, RelationMappingsThunk } from 'objection'
 import { RolesModel } from './roles'
 import { UsersDetailsModel } from './usersDetails'
+import { TransactionsModel } from './transactions'
 
 export class UsersModel extends Model {
     id!: UUID
     email!: string
-    full_name!: string
     password!: string
     role_id!: string
     user_detail_id!: UUID
+    user_active!: boolean
     otp!: string
-    active!: boolean
     otp_generated_time!: EpochTimeStamp
     created_date!: EpochTimeStamp
     updated_date!: EpochTimeStamp
+    deleted_date!: EpochTimeStamp
 
-    // type for join table or relationship
+    // types for join table or relationship
     role_name!: string
+    first_name!: string
+    last_name!: string
 
     static readonly tableName = 'users'
 
@@ -34,7 +37,7 @@ export class UsersModel extends Model {
         }
     }
 
-    static relationMappings = {
+    static relationMappings: RelationMappings | RelationMappingsThunk = {
         roles: {
             relation: Model.BelongsToOneRelation,
             modelClass: RolesModel,
@@ -49,6 +52,14 @@ export class UsersModel extends Model {
             join: {
                 from: 'users.user_detail_id',
                 to: 'users_details.id',
+            },
+        },
+        transactions: {
+            relation: Model.HasOneRelation,
+            modelClass: TransactionsModel,
+            join: {
+                from: 'users.id',
+                to: 'transactions.user_id',
             },
         },
     }
