@@ -3,25 +3,33 @@ import bcrypt from 'bcrypt'
 
 export async function seed(knex: Knex): Promise<void> {
     // Deletes ALL existing entries
-    await knex('users').del()
+    // await knex('users').del().where('id', 'f05033c7-3efc-4ad1-b4f7-14c3948c3030')
 
     // Inserts seed entries
     await knex('users').insert([
         {
+            id: 'f05033c7-3efc-4ad1-b4f7-14c3948c3030',
             email: 'mizz@gmail.com',
-            full_name: 'Mizz',
             password: await bcrypt.hash('mizz', 10),
-            role_id: '8376fa12-04e2-4943-ba7b-0487f6736d65',
-            user_detail_id: 'd24f134f-b884-4e35-8054-661e1281b8c5',
-            active: true,
+            role_id: 'a61526fe-77d6-4363-b40b-b35fca45347f',
+            user_detail_id: '9048ecee-962f-4d22-93e4-e3a482cbe773',
+            user_active: true,
+            created_date: new Date(),
+            updated_date: new Date(),
         },
-        {
-            email: 'lorem@gmail.com',
-            full_name: 'Lorem Ipsum',
-            password: await bcrypt.hash('lorem', 10),
-            role_id: '8376fa12-04e2-4943-ba7b-0487f6736d65',
-            user_detail_id: '3a5b928a-8aa5-4605-9891-258e24f823f4',
-            active: false,
-        },
+        // {
+        //     id: '0c34e170-7c64-4db9-835a-5da2b1e4f7bd',
+        //     email: 'lorem@gmail.com',
+        //     password: await bcrypt.hash('lorem', 10),
+        //     role_id: 'a61526fe-77d6-4363-b40b-b35fca45347f',
+        //     user_active: false,
+        // },
+        // {
+        //     id: '9048ecee-962f-4d22-93e4-e3a482cbe770',
+        //     email: 'kelompok4@gmail.com',
+        //     password: await bcrypt.hash('kelompok4', 10),
+        //     role_id: 'a61526fe-77d6-4363-b40b-b35fca45347f',
+        //     user_active: true,
+        // },
     ])
 }
