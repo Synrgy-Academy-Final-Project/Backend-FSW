@@ -9,11 +9,20 @@ configDotenv({ path: path.join(process.cwd(), '..', '..', '.env') })
 
 const config: Record<string, Knex.Config> = {
     development: {
-        client: process.env.CLIENT,
-        connection: process.env.DATABASE_URL,
+        client: process.env.CLIENT ?? 'pg',
+        connection: {
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
+            port: 5432,
+            ssl: {
+                rejectUnauthorized: false,
+            },
+        },
         pool: {
             min: 2,
-            max: 10,
+            max: 20,
         },
         migrations: {
             tableName: 'knex_migrations',
@@ -25,11 +34,11 @@ const config: Record<string, Knex.Config> = {
     },
 
     production: {
-        client: process.env.CLIENT,
+        client: process.env.CLIENT ?? 'pg',
         connection: process.env.DATABASE_URL,
         pool: {
             min: 2,
-            max: 10,
+            max: 20,
         },
         migrations: {
             tableName: 'knex_migrations',
