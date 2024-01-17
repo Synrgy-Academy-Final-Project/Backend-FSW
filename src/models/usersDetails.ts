@@ -1,10 +1,12 @@
 import type { UUID } from 'crypto'
 import { Model } from 'objection'
-import type { ModelObject } from 'objection'
+import type { ModelObject, RelationMappings, RelationMappingsThunk } from 'objection'
 import { UsersModel } from './users'
 
 export class UsersDetailsModel extends Model {
     id!: UUID
+    first_name!: string
+    last_name!: string
     address!: string
     gender!: string
     phone_number!: string
@@ -14,10 +16,11 @@ export class UsersDetailsModel extends Model {
     nik!: string
     created_date!: EpochTimeStamp
     updated_date!: EpochTimeStamp
+    deleted_date!: EpochTimeStamp
 
     static readonly tableName = 'users_details'
 
-    static relationMappings = {
+    static relationMappings: RelationMappings | RelationMappingsThunk = {
         users: {
             relation: Model.HasOneRelation,
             modelClass: UsersModel,
