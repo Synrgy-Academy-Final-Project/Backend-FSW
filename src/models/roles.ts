@@ -1,6 +1,6 @@
 import type { UUID } from 'crypto'
 import { Model } from 'objection'
-import type { JSONSchema, ModelObject } from 'objection'
+import type { JSONSchema, ModelObject, RelationMappings, RelationMappingsThunk } from 'objection'
 import { UsersModel } from './users'
 
 export class RolesModel extends Model {
@@ -8,6 +8,7 @@ export class RolesModel extends Model {
     name!: string
     created_date!: EpochTimeStamp
     updated_date!: EpochTimeStamp
+    deleted_date!: EpochTimeStamp
 
     static readonly tableName = 'roles'
     // validasi http request body
@@ -18,7 +19,7 @@ export class RolesModel extends Model {
         }
     }
 
-    static relationMappings = {
+    static relationMappings: RelationMappings | RelationMappingsThunk = {
         users: {
             relation: Model.HasOneRelation,
             modelClass: UsersModel,
