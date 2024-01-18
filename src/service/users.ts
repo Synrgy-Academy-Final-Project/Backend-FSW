@@ -2,7 +2,7 @@ import type { Users } from '../models/users'
 import { UserRepository } from '../repository/users'
 
 export class UserService {
-    public userRepository: UserRepository
+    readonly userRepository: UserRepository
 
     public constructor() {
         this.userRepository = new UserRepository()

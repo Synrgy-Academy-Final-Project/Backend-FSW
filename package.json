@@ -9,7 +9,8 @@
     "start": "node dist/index.js",
     "setup": "npx knex migrate:down --knexfile src/config/knexfile.ts && npx knex migrate:latest --knexfile src/config/knexfile.ts && npx knex seed:run --knexfile src/config/knexfile.ts",
     "knex": "npx knex --knexfile src/config/knexfile.ts",
-    "keys": "cd keys && ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key"
+    "keys": "cd keys && ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key",
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -43,7 +44,8 @@
     "eslint-plugin-prettier": "^5.1.2",
     "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^3.0.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
