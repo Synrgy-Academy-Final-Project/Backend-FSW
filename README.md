@@ -29,6 +29,10 @@ $ npm run keys                                                                  
 {
     "email": "mizz@gmail.com",
     "password": "mizz"
+},
+{
+    "email": "dharmawan@gmail.com",
+    "password": "dharmawan"
 }
 ```
 
