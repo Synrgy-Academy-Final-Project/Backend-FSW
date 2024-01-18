@@ -11,4 +11,24 @@ export class PaymentRepository {
             .groupBy(raw("TO_CHAR(transaction_time, 'Month'), status_code, transaction_status"))
             .throwIfNotFound()
     }
+
+    public findTransactionFailed = async (): Promise<PaymentsModel[]> => {
+        return await PaymentsModel.query()
+            .select(raw("TO_CHAR(transaction_time, 'Month') as month"), 'status_code', 'transaction_status')
+            .count('transaction_id as transaction_count')
+            .sum('gross_amount as transaction_amount')
+            .where('transaction_status', 'failure')
+            .groupBy(raw("TO_CHAR(transaction_time, 'Month'), status_code, transaction_status"))
+            .throwIfNotFound()
+    }
+
+    public findTransactionRefund = async (): Promise<PaymentsModel[]> => {
+        return await PaymentsModel.query()
+            .select(raw("TO_CHAR(transaction_time, 'Month') as month"), 'status_code', 'transaction_status')
+            .count('transaction_id as transaction_count')
+            .sum('gross_amount as transaction_amount')
+            .where('transaction_status', 'refund')
+            .groupBy(raw("TO_CHAR(transaction_time, 'Month'), status_code, transaction_status"))
+            .throwIfNotFound()
+    }
 }
