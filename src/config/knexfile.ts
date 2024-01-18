@@ -35,7 +35,16 @@ const config: Record<string, Knex.Config> = {
 
     production: {
         client: process.env.CLIENT ?? 'pg',
-        connection: process.env.DATABASE_URL,
+        connection: {
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
+            port: 5432,
+            ssl: {
+                rejectUnauthorized: false,
+            },
+        },
         pool: {
             min: 2,
             max: 20,
