@@ -20,6 +20,7 @@ $ npm run knex migrate:make migration_name                                      
 $ npm run knex seed:make seed_name                                              # create new file seeds
 $ npx knex seed:run --specific=filename.ts --knexfile src/config/knexfile.ts    # run seed specific filename
 $ npm run keys                                                                  # create private and public key jwt, no passphrase
+# npm run test                                                                  # run unit test
 ```
 
 ## Account Login Admin
