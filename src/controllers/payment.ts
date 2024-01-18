@@ -20,4 +20,30 @@ export class PaymentController {
             return res.status(500).json({ message: 'Internal Server Error' })
         }
     }
+
+    public getTransactionFailed = async (
+        _: Request,
+        res: Response
+    ): Promise<Response<unknown, Record<string, unknown>>> => {
+        try {
+            const transaction = await this.paymentService.getTransactionFailed()
+            return res.status(202).json(transaction)
+        } catch (err: unknown) {
+            console.error(err)
+            return res.status(500).json({ message: 'Internal Server Error' })
+        }
+    }
+
+    public getTransactionRefund = async (
+        _: Request,
+        res: Response
+    ): Promise<Response<unknown, Record<string, unknown>>> => {
+        try {
+            const transaction = await this.paymentService.getTransactionRefund()
+            return res.status(201).json(transaction)
+        } catch (err: unknown) {
+            console.error(err)
+            return res.status(500).json({ message: 'Internal Server Error' })
+        }
+    }
 }
