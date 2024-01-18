@@ -124,6 +124,16 @@ router.post('/api/v1/auth/login', userController.login)
  *                message:
  *                  type: string
  *                  example: Invalid token
+ *      403:
+ *        description: Forbidden
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Forbidden
  */
 router.get('/api/v1/users/profile', authToken, userController.profile)
 
