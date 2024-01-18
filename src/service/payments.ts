@@ -11,4 +11,12 @@ export class PaymentService {
     public getTransactionSuccess = async (): Promise<PaymentsModel[]> => {
         return await this.paymentRepository.findTransactionSuccess()
     }
+
+    public getTransactionFailed = async (): Promise<PaymentsModel[]> => {
+        return await this.paymentRepository.findTransactionFailed()
+    }
+
+    public getTransactionRefund = async (): Promise<PaymentsModel[]> => {
+        return await this.paymentRepository.findTransactionRefund()
+    }
 }
