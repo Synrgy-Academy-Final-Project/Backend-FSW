@@ -24,6 +24,10 @@ const options: swaggerJSDoc.Options = {
                 url: 'https://backend-fsw.fly.dev',
                 description: 'Production Server',
             },
+            {
+                url: 'http://127.0.0.1:8080',
+                description: 'Development Server',
+            },
         ],
     },
     apis: ['./src/config/routes.ts'],
