@@ -1,9 +1,9 @@
 import 'dotenv/config'
 import { expect, test } from 'vitest'
 import knex from 'knex'
-import config from '../config/knexfile'
+import config from '../../config/knexfile'
 import { Model, raw } from 'objection'
-import { PaymentsModel } from '../models/payments'
+import { PaymentsModel } from '../../models/payments'
 
 test('transaction', async () => {
     // connect db postgres client

@@ -1,8 +1,8 @@
 import 'dotenv/config'
-import { UsersModel } from '../models/users'
+import { UsersModel } from '../../models/users'
 import { expect, test } from 'vitest'
 import knex from 'knex'
-import config from '../config/knexfile'
+import config from '../../config/knexfile'
 import { Model } from 'objection'
 
 test('user', async () => {
