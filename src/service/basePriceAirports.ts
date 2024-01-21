@@ -32,4 +32,8 @@ export class BasePriceAirportService {
             updatedDate
         )
     }
+
+    public getAllBasePriceAirport = async (): Promise<BasePriceAirportsModel[]> => {
+        return await this.basePriceAirportRepository.findAll()
+    }
 }

@@ -341,7 +341,8 @@ router.get('/api/v1/summary/trx/refund', authToken, paymentController.getTransac
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/airports', airportController.getListAirport)
+router.get('/api/v1/airports', authToken, airportController.getListAirport)
+
 /**
  * @openapi
  * /api/v1/airports/baseprice:
@@ -421,7 +422,86 @@ router.get('/api/v1/airports', airportController.getListAirport)
  *                  type: string
  *                  example: Internal Server Error
  */
-router.post('/api/v1/airports/baseprice', basePriceAirportController.saveBasePriceAirport)
+router.post('/api/v1/airports/baseprice', authToken, basePriceAirportController.saveBasePriceAirport)
+
+/**
+ * @openapi
+ * /api/v1/airports/baseprice:
+ *  get:
+ *    summary: Get All Base Price Airport
+ *    description: Get All Base Price Airport
+ *    tags:
+ *      - Airports
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: array
+ *                 items:
+ *                  type: object
+ *                  properties:
+ *                      from_city:
+ *                          type: string
+ *                      from_code:
+ *                          type: string
+ *                      to_city:
+ *                          type: string
+ *                      to_code:
+ *                          type: string
+ *                      duration:
+ *                          type: number
+ *                      price:
+ *                          type: number
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Base Price Airport Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/airports/baseprice', authToken, basePriceAirportController.getAllBasePriceAirport)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 

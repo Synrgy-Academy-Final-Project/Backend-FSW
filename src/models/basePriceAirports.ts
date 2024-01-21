@@ -15,6 +15,12 @@ export class BasePriceAirportsModel extends Model {
     updated_date!: Date
     deleted_date!: Date
 
+    // types for alias
+    from_city!: string
+    from_code!: string
+    to_city!: string
+    to_code!: string
+
     static readonly tableName = 'baseprice_airports'
 
     static relationMappings: RelationMappings | RelationMappingsThunk = {
