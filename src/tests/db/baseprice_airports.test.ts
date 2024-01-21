@@ -11,13 +11,16 @@ test('base price airport', async () => {
 
     const results = await BasePriceAirportsModel.query()
         .select(
-            'from_airport_id',
-            'to_airport_id',
-            'departure_code',
-            'arrival_code',
-            'duration',
-            'airport_price as price'
+            'apfrom.city as from_city',
+            'apfrom.code as from_code',
+            'apto.city as to_city',
+            'apto.code as to_code',
+            'bpa.duration',
+            'bpa.airport_price as price'
         )
+        .join('airports as apfrom', 'apfrom.id', 'bpa.from_airport_id')
+        .join('airports as apto', 'apto.id', 'bpa.to_airport_id')
+        .from('baseprice_airports as bpa')
         .throwIfNotFound()
 
     console.log(results)
