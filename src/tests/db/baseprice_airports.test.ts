@@ -11,6 +11,7 @@ test('base price airport', async () => {
 
     const results = await BasePriceAirportsModel.query()
         .select(
+            'bpa.id',
             'apfrom.city as from_city',
             'apfrom.code as from_code',
             'apto.city as to_city',
@@ -23,7 +24,19 @@ test('base price airport', async () => {
         .from('baseprice_airports as bpa')
         .throwIfNotFound()
 
+    const updateById = await BasePriceAirportsModel.query()
+        .patch({
+            airport_price: 95000,
+        })
+        .where('id', 'abc9e1d6-220b-447a-82fc-dc880735f1f1')
+
+    const deleteById = await BasePriceAirportsModel.query().deleteById('abc9e1d6-220b-447a-82fc-dc880735f1f1')
+
+    console.log(updateById)
+    console.log(deleteById)
     console.log(results)
 
+    expect(updateById).toBeFalsy()
+    expect(deleteById).toBeFalsy()
     expect(results).toBeTruthy()
 }, 20000)

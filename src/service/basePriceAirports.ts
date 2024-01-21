@@ -36,4 +36,15 @@ export class BasePriceAirportService {
     public getAllBasePriceAirport = async (): Promise<BasePriceAirportsModel[]> => {
         return await this.basePriceAirportRepository.findAll()
     }
+
+    public updateBasePriceAirport = async (
+        id: string,
+        airport: Partial<BasePriceAirportsModel>
+    ): Promise<BasePriceAirportsModel[]> => {
+        return await this.basePriceAirportRepository.updateById(id, airport)
+    }
+
+    public deleteBasePriceAirport = async (id: string): Promise<number> => {
+        return await this.basePriceAirportRepository.deleteById(id)
+    }
 }

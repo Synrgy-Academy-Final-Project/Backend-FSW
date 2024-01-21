@@ -1,4 +1,5 @@
 import type { UUID } from 'crypto'
+import type { BasePriceAirports } from '../models/basePriceAirports'
 import { BasePriceAirportsModel } from '../models/basePriceAirports'
 
 export class BasePriceAirportsRepository {
@@ -31,6 +32,7 @@ export class BasePriceAirportsRepository {
     public findAll = async (): Promise<BasePriceAirportsModel[]> => {
         return await BasePriceAirportsModel.query()
             .select(
+                'bpa.id',
                 'apfrom.city as from_city',
                 'apfrom.code as from_code',
                 'apto.city as to_city',
@@ -41,5 +43,13 @@ export class BasePriceAirportsRepository {
             .join('airports as apfrom', 'apfrom.id', 'bpa.from_airport_id')
             .join('airports as apto', 'apto.id', 'bpa.to_airport_id')
             .from('baseprice_airports as bpa')
+    }
+
+    public updateById = async (id: string, airport: Partial<BasePriceAirports>): Promise<BasePriceAirportsModel[]> => {
+        return await BasePriceAirportsModel.query().patch(airport).where({ id }).throwIfNotFound().returning('*')
+    }
+
+    public deleteById = async (id: string): Promise<number> => {
+        return await BasePriceAirportsModel.query().deleteById(id).throwIfNotFound()
     }
 }
