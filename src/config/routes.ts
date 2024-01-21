@@ -411,6 +411,19 @@ router.get('/api/v1/airports', authToken, airportController.getListAirport)
  *                message:
  *                  type: string
  *                  example: Invalid Token
+ *      409:
+ *        description: Conflict
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 409
+ *                message:
+ *                  type: string
+ *                  example: Duplicate From City and To City
  *      500:
  *        description: Internal Server Error
  *        content:
@@ -451,6 +464,8 @@ router.post('/api/v1/airports/baseprice', authToken, basePriceAirportController.
  *                 items:
  *                  type: object
  *                  properties:
+ *                      id:
+ *                          type: string
  *                      from_city:
  *                          type: string
  *                      from_code:
@@ -502,6 +517,180 @@ router.post('/api/v1/airports/baseprice', authToken, basePriceAirportController.
  *                  example: Internal Server Error
  */
 router.get('/api/v1/airports/baseprice', authToken, basePriceAirportController.getAllBasePriceAirport)
+
+/**
+ * @openapi
+ * /api/v1/airports/baseprice/{id}:
+ *  patch:
+ *    summary: Update Base Price Airport By Id
+ *    description: Update new Base Price Airport By Id
+ *    tags:
+ *      - Airports
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of base price airport
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              fromAirportId:
+ *               type: string
+ *              toAirportId:
+ *               type: string
+ *              duration:
+ *               type: number
+ *              price:
+ *               type: number
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  from_airport_id:
+ *                      type: string
+ *                  to_airport_id:
+ *                      type: string
+ *                  departure_code:
+ *                      type: string
+ *                  arrival_code:
+ *                      type: string
+ *                  duration:
+ *                      type: number
+ *                  airport_price:
+ *                      type: number
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      409:
+ *        description: Conflict
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 409
+ *                message:
+ *                  type: string
+ *                  example: Duplicate From City and To City
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.patch('/api/v1/airports/baseprice/:id', authToken, basePriceAirportController.updateBasePriceAirport)
+
+/**
+ * @openapi
+ * /api/v1/airports/baseprice/{id}:
+ *  delete:
+ *    summary: Delete Base Price Airport By Id
+ *    description: Delete new Base Price Airport By Id
+ *    tags:
+ *      - Airports
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of car
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      403:
+ *        description: Forbidden
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Forbidden
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: ID Base Price Airport Not Found
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.delete('/api/v1/airports/baseprice/:id', authToken, basePriceAirportController.deleteBasePriceAirport)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
