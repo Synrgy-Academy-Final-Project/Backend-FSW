@@ -103,4 +103,103 @@ export class BasePriceAirportController {
             })
         }
     }
+
+    public updateBasePriceAirport = async (
+        req: Request,
+        res: Response
+    ): Promise<Response<any, Record<string, any>>> => {
+        try {
+            const { id } = req.params
+            const { fromAirportId, toAirportId, duration, price } = req.body
+
+            const fromAirport = await this.airportService.getAirportById(fromAirportId as UUID)
+            const { code: departureCode } = fromAirport
+
+            const toAirport = await this.airportService.getAirportById(toAirportId as UUID)
+            const { code: arrivalCode } = toAirport
+
+            const updatedDate = new Date()
+
+            const basePriceAirports = await this.basePriceAirportService.getAllBasePriceAirport()
+
+            if (basePriceAirports.length > 0) {
+                const duplicateBasePriceAirport = basePriceAirports.map((basePriceAirport) => {
+                    if (basePriceAirport.from_code === departureCode && basePriceAirport.to_code === arrivalCode) {
+                        return true
+                    }
+
+                    return false
+                })
+
+                if (duplicateBasePriceAirport.includes(true)) {
+                    return res.status(409).json({
+                        status: 409,
+                        message: 'Duplicate From City and To City',
+                    })
+                }
+            }
+
+            const basePriceAirport = await this.basePriceAirportService.updateBasePriceAirport(id, {
+                from_airport_id: fromAirportId,
+                to_airport_id: toAirportId,
+                departure_code: departureCode,
+                arrival_code: arrivalCode,
+                duration,
+                airport_price: price,
+                updated_date: updatedDate,
+            })
+
+            return res.status(200).json({
+                status: 200,
+                message: 'update base price airport successfully',
+                data: basePriceAirport,
+            })
+        } catch (error: any) {
+            console.error(error)
+
+            if (error.statusCode === 404) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'ID Base Price Airport Not Found',
+                })
+            }
+
+            return res.status(500).json({
+                status: 500,
+                message: 'Internal Server Error',
+            })
+        }
+    }
+
+    public deleteBasePriceAirport = async (
+        req: Request,
+        res: Response
+    ): Promise<Response<any, Record<string, any>>> => {
+        try {
+            const { id } = req.params
+
+            const basePriceAirport = await this.basePriceAirportService.deleteBasePriceAirport(id)
+
+            if (basePriceAirport === 0) throw new Error()
+
+            return res.status(200).json({
+                status: 200,
+                message: 'delete airport successfully',
+            })
+        } catch (error: any) {
+            console.error(error)
+
+            if (error.statusCode === 404) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'ID Base Price Airport Not Found',
+                })
+            }
+
+            return res.status(500).json({
+                status: 500,
+                message: 'Internal Server Error',
+            })
+        }
+    }
 }
