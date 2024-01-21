@@ -6,12 +6,16 @@ import { swaggerSpec } from './swagger'
 import swaggerUI from 'swagger-ui-express'
 import { authToken } from '../middlewares/authToken'
 import { PaymentController } from '../controllers/payment'
+import { AirportController } from '../controllers/airport'
+import { BasePriceAirportController } from '../controllers/basePriceAirport'
 
 const router = express.Router()
 
 const homeController = new HomeController()
 const userController = new UserController()
 const paymentController = new PaymentController()
+const airportController = new AirportController()
+const basePriceAirportController = new BasePriceAirportController()
 
 // list route
 
@@ -285,6 +289,139 @@ router.get('/api/v1/summary/trx/failed', authToken, paymentController.getTransac
  *                  example: Internal Server Error
  */
 router.get('/api/v1/summary/trx/refund', authToken, paymentController.getTransactionRefund)
+
+/**
+ * @openapi
+ * /api/v1/airports:
+ *  get:
+ *    summary: Get All Airport
+ *    description: Get List Airport
+ *    tags:
+ *      - Airports
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                  type: object
+ *                  properties:
+ *                      month:
+ *                          type: string
+ *                      status_code:
+ *                          type: number
+ *                      transaction_status:
+ *                          type: string
+ *                      transaction_count:
+ *                          type: string
+ *                      transaction_amount:
+ *                          type: number
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/airports', airportController.getListAirport)
+/**
+ * @openapi
+ * /api/v1/airports/baseprice:
+ *  post:
+ *    summary: Create Base Price Airport
+ *    description: Create new Base Price Airport
+ *    tags:
+ *      - Airports
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              fromAirportId:
+ *               type: string
+ *              toAirportId:
+ *               type: string
+ *              duration:
+ *               type: number
+ *              price:
+ *               type: number
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  from_airport_id:
+ *                      type: string
+ *                  to_airport_id:
+ *                      type: string
+ *                  departure_code:
+ *                      type: string
+ *                  arrival_code:
+ *                      type: string
+ *                  duration:
+ *                      type: number
+ *                  airport_price:
+ *                      type: number
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.post('/api/v1/airports/baseprice', basePriceAirportController.saveBasePriceAirport)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
