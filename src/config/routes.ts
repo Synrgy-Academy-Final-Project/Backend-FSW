@@ -529,7 +529,7 @@ router.get('/api/v1/airports/baseprice', authToken, basePriceAirportController.g
  * /api/v1/airports/baseprice/{id}:
  *  patch:
  *    summary: Update Base Price Airport By Id
- *    description: Update new Base Price Airport By Id
+ *    description: Update Base Price Airport By Id
  *    tags:
  *      - Airports
  *    security:
@@ -726,7 +726,7 @@ router.get('/api/v1/airports/baseprice/:id', authToken, basePriceAirportControll
  * /api/v1/airports/baseprice/{id}:
  *  delete:
  *    summary: Delete Base Price Airport By Id
- *    description: Delete new Base Price Airport By Id
+ *    description: Delete Base Price Airport By Id
  *    tags:
  *      - Airports
  *    security:
@@ -737,7 +737,7 @@ router.get('/api/v1/airports/baseprice/:id', authToken, basePriceAirportControll
  *        schema:
  *          type: string
  *          format: uuid
- *        description: UUID of airport
+ *        description: UUID of base price airport
  *    responses:
  *      200:
  *        description: OK
@@ -953,7 +953,7 @@ router.get('/api/v1/dates/baseprice', authToken, basePriceDateController.getAllB
  * /api/v1/dates/baseprice/{id}:
  *  patch:
  *    summary: Update Base Price Date By Id
- *    description: Update new Base Price Date By Id
+ *    description: Update Base Price Date By Id
  *    tags:
  *      - Dates
  *    security:
@@ -1035,7 +1035,7 @@ router.patch('/api/v1/dates/baseprice/:id', authToken, basePriceDateController.u
  * /api/v1/dates/baseprice/{id}:
  *  delete:
  *    summary: Delete Base Price Date By Id
- *    description: Delete new Base Price Date By Id
+ *    description: Delete Base Price Date By Id
  *    tags:
  *      - Dates
  *    security:
@@ -1046,7 +1046,7 @@ router.patch('/api/v1/dates/baseprice/:id', authToken, basePriceDateController.u
  *        schema:
  *          type: string
  *          format: uuid
- *        description: UUID of date
+ *        description: UUID of base price date
  *    responses:
  *      200:
  *        description: OK
