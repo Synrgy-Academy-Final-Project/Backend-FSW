@@ -584,10 +584,6 @@ router.get('/api/v1/airports/baseprice', authToken, basePriceAirportController.g
  *                      type: number
  *                  price:
  *                      type: number
- *                  fromAirportId:
- *                      type: string
- *                  toAirportId:
- *                      type: string
  *                  createdDate:
  *                      type: date
  *                  updatedDate:
