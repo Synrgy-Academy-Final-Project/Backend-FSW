@@ -63,7 +63,17 @@ export class BasePriceAirportController {
             return res.status(201).json({
                 status: 201,
                 message: 'success',
-                data: basePriceAirport,
+                data: {
+                    id: basePriceAirport.id,
+                    fromAirportId: basePriceAirport.from_airport_id,
+                    toAirportId: basePriceAirport.to_airport_id,
+                    departureCode: basePriceAirport.departure_code,
+                    arrivalCode: basePriceAirport.arrival_code,
+                    duration: basePriceAirport.duration,
+                    price: basePriceAirport.airport_price,
+                    createdDate: basePriceAirport.created_date,
+                    updatedDate: basePriceAirport.updated_date,
+                },
             })
         } catch (error) {
             console.error(error)
@@ -84,7 +94,17 @@ export class BasePriceAirportController {
             return res.status(200).json({
                 status: 200,
                 message: 'success',
-                data: basePriceAirport,
+                data: {
+                    id: basePriceAirport[0].id,
+                    fromCity: basePriceAirport[0].from_city,
+                    fromCode: basePriceAirport[0].from_code,
+                    toCity: basePriceAirport[0].to_city,
+                    toCode: basePriceAirport[0].to_code,
+                    duration: basePriceAirport[0].duration,
+                    price: basePriceAirport[0].airport_price,
+                    createdDate: basePriceAirport[0].created_date,
+                    updatedDate: basePriceAirport[0].updated_date,
+                },
             })
         } catch (error: any) {
             console.error(error)
@@ -152,7 +172,17 @@ export class BasePriceAirportController {
             return res.status(200).json({
                 status: 200,
                 message: 'update base price airport successfully',
-                data: basePriceAirport,
+                data: {
+                    id: basePriceAirport[0].id,
+                    fromAirportId: basePriceAirport[0].from_airport_id,
+                    toAirportId: basePriceAirport[0].to_airport_id,
+                    departureCode: basePriceAirport[0].departure_code,
+                    arrivalCode: basePriceAirport[0].arrival_code,
+                    duration: basePriceAirport[0].duration,
+                    price: basePriceAirport[0].airport_price,
+                    createdDate: basePriceAirport[0].created_date,
+                    updatedDate: basePriceAirport[0].updated_date,
+                },
             })
         } catch (error: any) {
             console.error(error)
