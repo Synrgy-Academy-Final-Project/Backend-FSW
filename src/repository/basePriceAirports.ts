@@ -39,6 +39,8 @@ export class BasePriceAirportsRepository {
                 'apto.code as toCode',
                 'bpa.duration',
                 'bpa.airport_price as price',
+                'bpa.from_airport_id as fromAirportId',
+                'bpa.to_airport_id as toAirportId',
                 'bpa.created_date as createdDate',
                 'bpa.updated_date as updatedDate'
             )
