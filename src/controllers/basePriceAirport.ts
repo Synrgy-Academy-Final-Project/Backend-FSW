@@ -4,6 +4,7 @@ import { BasePriceAirportService } from '../service/basePriceAirports'
 import type { UUID } from 'crypto'
 import { AirportService } from '../service/airports'
 import { v4 as uuidv4 } from 'uuid'
+import type { BasePriceAirports } from '../models/basePriceAirports'
 
 export class BasePriceAirportController {
     readonly basePriceAirportService: BasePriceAirportService
@@ -29,23 +30,31 @@ export class BasePriceAirportController {
             const createdDate = new Date()
             const updatedDate = new Date()
 
+            let duplicateBasePriceAirport: boolean = false
+
             const basePriceAirports = await this.basePriceAirportService.getAllBasePriceAirport()
 
             if (basePriceAirports.length > 0) {
-                const duplicateBasePriceAirport = basePriceAirports.map((basePriceAirport) => {
-                    if (basePriceAirport.from_code === departureCode && basePriceAirport.to_code === arrivalCode) {
-                        return true
+                for (const basePriceAirport of basePriceAirports) {
+                    if (
+                        basePriceAirport.fromAirportId === fromAirportId &&
+                        basePriceAirport.toAirportId === toAirportId
+                    ) {
+                        duplicateBasePriceAirport = true
+                        break
+                    } else {
+                        duplicateBasePriceAirport = false
                     }
-
-                    return false
-                })
-
-                if (duplicateBasePriceAirport.includes(true)) {
-                    return res.status(409).json({
-                        status: 409,
-                        message: 'Duplicate From City and To City',
-                    })
                 }
+            }
+
+            console.log('duplicate create:', duplicateBasePriceAirport)
+
+            if (duplicateBasePriceAirport) {
+                return res.status(409).json({
+                    status: 409,
+                    message: 'Duplicate From City and To City',
+                })
             }
 
             const basePriceAirport = await this.basePriceAirportService.saveBasePriceAirport(
@@ -87,24 +96,14 @@ export class BasePriceAirportController {
 
     public getAllBasePriceAirport = async (_: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
         try {
-            const basePriceAirport = await this.basePriceAirportService.getAllBasePriceAirport()
+            const allBasePriceAirport = await this.basePriceAirportService.getAllBasePriceAirport()
 
-            if (basePriceAirport.length === 0) throw new Error()
+            if (allBasePriceAirport === undefined) throw new Error()
 
             return res.status(200).json({
                 status: 200,
                 message: 'success',
-                data: {
-                    id: basePriceAirport[0].id,
-                    fromCity: basePriceAirport[0].from_city,
-                    fromCode: basePriceAirport[0].from_code,
-                    toCity: basePriceAirport[0].to_city,
-                    toCode: basePriceAirport[0].to_code,
-                    duration: basePriceAirport[0].duration,
-                    price: basePriceAirport[0].airport_price,
-                    createdDate: basePriceAirport[0].created_date,
-                    updatedDate: basePriceAirport[0].updated_date,
-                },
+                data: allBasePriceAirport,
             })
         } catch (error: any) {
             console.error(error)
@@ -124,13 +123,46 @@ export class BasePriceAirportController {
         }
     }
 
+    public getBasePriceAirportById = async (
+        req: Request,
+        res: Response
+    ): Promise<Response<any, Record<string, any>> | undefined> => {
+        try {
+            const { id } = req.params
+
+            const basePriceAirport = await this.basePriceAirportService.getBasePriceAirportById(id)
+
+            if (basePriceAirport === undefined) throw new Error()
+
+            return res.status(200).json({
+                status: 200,
+                message: 'success',
+                data: basePriceAirport,
+            })
+        } catch (error: any) {
+            console.error(error)
+
+            if (error.statusCode === 404) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'ID Base Price Airport Not Found',
+                })
+            }
+
+            return res.status(500).json({
+                status: 500,
+                message: 'Internal Server Error',
+            })
+        }
+    }
+
     public updateBasePriceAirport = async (
         req: Request,
         res: Response
-    ): Promise<Response<any, Record<string, any>>> => {
+    ): Promise<Response<any, Record<string, any>> | undefined> => {
         try {
             const { id } = req.params
-            const { fromAirportId, toAirportId, duration, price } = req.body
+            const { fromAirportId, toAirportId, duration, price }: Partial<BasePriceAirports> = req.body
 
             const fromAirport = await this.airportService.getAirportById(fromAirportId as UUID)
             const { code: departureCode } = fromAirport
@@ -140,23 +172,36 @@ export class BasePriceAirportController {
 
             const updatedDate = new Date()
 
+            let duplicateBasePriceAirport: boolean = false
+
             const basePriceAirports = await this.basePriceAirportService.getAllBasePriceAirport()
+            const basePriceAirportById = await this.basePriceAirportService.getBasePriceAirportById(id)
+
+            const fromAirportById = basePriceAirportById.fromAirportId
+            const toAirportById = basePriceAirportById.toAirportId
 
             if (basePriceAirports.length > 0) {
-                const duplicateBasePriceAirport = basePriceAirports.map((basePriceAirport) => {
-                    if (basePriceAirport.from_code === departureCode && basePriceAirport.to_code === arrivalCode) {
-                        return true
+                for (const basePriceAirport of basePriceAirports) {
+                    if (
+                        basePriceAirport.fromAirportId === fromAirportId &&
+                        basePriceAirport.toAirportId === toAirportId
+                    ) {
+                        duplicateBasePriceAirport = true
                     }
-
-                    return false
-                })
-
-                if (duplicateBasePriceAirport.includes(true)) {
-                    return res.status(409).json({
-                        status: 409,
-                        message: 'Duplicate From City and To City',
-                    })
                 }
+            }
+
+            if (fromAirportById === fromAirportId && toAirportById === toAirportId) {
+                duplicateBasePriceAirport = false
+            }
+
+            console.log('duplicate update:', duplicateBasePriceAirport)
+
+            if (duplicateBasePriceAirport) {
+                return res.status(409).json({
+                    status: 409,
+                    message: 'Duplicate From City and To City',
+                })
             }
 
             const basePriceAirport = await this.basePriceAirportService.updateBasePriceAirport(id, {
