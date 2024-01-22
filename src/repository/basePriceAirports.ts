@@ -29,22 +29,26 @@ export class BasePriceAirportsRepository {
             .throwIfNotFound()
     }
 
-    public findAll = async (): Promise<BasePriceAirportsModel[]> => {
+    public findAll = async (): Promise<BasePriceAirports[]> => {
         return await BasePriceAirportsModel.query()
             .select(
                 'bpa.id',
-                'apfrom.city as from_city',
-                'apfrom.code as from_code',
-                'apto.city as to_city',
-                'apto.code as to_code',
+                'apfrom.city as fromCity',
+                'apfrom.code as fromCode',
+                'apto.city as toCity',
+                'apto.code as toCode',
                 'bpa.duration',
                 'bpa.airport_price as price',
-                'bpa.created_date as created_date',
-                'bpa.updated_date as updated_date'
+                'bpa.created_date as createdDate',
+                'bpa.updated_date as updatedDate'
             )
             .join('airports as apfrom', 'apfrom.id', 'bpa.from_airport_id')
             .join('airports as apto', 'apto.id', 'bpa.to_airport_id')
             .from('baseprice_airports as bpa')
+    }
+
+    public findById = async (id: string): Promise<BasePriceAirportsModel> => {
+        return await BasePriceAirportsModel.query().findById(id).throwIfNotFound()
     }
 
     public updateById = async (id: string, airport: Partial<BasePriceAirports>): Promise<BasePriceAirportsModel[]> => {
