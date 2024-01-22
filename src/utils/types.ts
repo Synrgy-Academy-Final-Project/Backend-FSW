@@ -6,6 +6,8 @@ export interface BasePriceAirportsType {
     toCode: string
     duration: number
     price: number
+    fromAirportId: string
+    toAirportId: string
     createdDate: Date
     updatedDate: Date
 }
