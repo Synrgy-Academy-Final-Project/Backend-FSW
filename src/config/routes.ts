@@ -370,8 +370,8 @@ router.get('/api/v1/airports', authToken, airportController.getListAirport)
  *              price:
  *               type: number
  *    responses:
- *      200:
- *        description: OK
+ *      201:
+ *        description: Created
  *        content:
  *          application/json:
  *            schema:
@@ -386,21 +386,21 @@ router.get('/api/v1/airports', authToken, airportController.getListAirport)
  *                 properties:
  *                  id:
  *                      type: string
- *                  from_airport_id:
+ *                  fromAirportId:
  *                      type: string
- *                  to_airport_id:
+ *                  toAirportId:
  *                      type: string
- *                  departure_code:
+ *                  departureCode:
  *                      type: string
- *                  arrival_code:
+ *                  arrivalCode:
  *                      type: string
  *                  duration:
  *                      type: number
- *                  airport_price:
+ *                  price:
  *                      type: number
- *                  created_date:
+ *                  createdDate:
  *                      type: date
- *                  updated_date:
+ *                  updatedDate:
  *                      type: date
  *
  *      401:
@@ -468,18 +468,22 @@ router.post('/api/v1/airports/baseprice', authToken, basePriceAirportController.
  *                  properties:
  *                      id:
  *                          type: string
- *                      from_city:
+ *                      fromCity:
  *                          type: string
- *                      from_code:
+ *                      fromCode:
  *                          type: string
- *                      to_city:
+ *                      toCity:
  *                          type: string
- *                      to_code:
+ *                      toCode:
  *                          type: string
  *                      duration:
  *                          type: number
  *                      price:
  *                          type: number
+ *                      createdDate:
+ *                          type: date
+ *                      updatedDate:
+ *                          type: date
  *
  *      401:
  *        description: Unauthorized
@@ -568,21 +572,21 @@ router.get('/api/v1/airports/baseprice', authToken, basePriceAirportController.g
  *                 properties:
  *                  id:
  *                      type: string
- *                  from_airport_id:
+ *                  fromAirportId:
  *                      type: string
- *                  to_airport_id:
+ *                  toAirportId:
  *                      type: string
- *                  departure_code:
+ *                  departureCode:
  *                      type: string
- *                  arrival_code:
+ *                  arrivalCode:
  *                      type: string
  *                  duration:
  *                      type: number
- *                  airport_price:
+ *                  price:
  *                      type: number
- *                  created_date:
+ *                  createdDate:
  *                      type: date
- *                  updated_date:
+ *                  updatedDate:
  *                      type: date
  *
  *      401:
