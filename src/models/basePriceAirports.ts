@@ -16,10 +16,13 @@ export class BasePriceAirportsModel extends Model {
     deleted_date!: Date
 
     // types for alias
-    from_city!: string
-    from_code!: string
-    to_city!: string
-    to_code!: string
+    fromCity!: string
+    fromCode!: string
+    toCity!: string
+    toCode!: string
+    price!: number
+    createdDate!: Date
+    updatedDate!: Date
 
     static readonly tableName = 'baseprice_airports'
 
