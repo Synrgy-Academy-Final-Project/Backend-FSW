@@ -1,12 +1,11 @@
-import type { UUID } from 'crypto'
 import { Model } from 'objection'
 import type { ModelObject, RelationMappings, RelationMappingsThunk } from 'objection'
 import { AirportsModel } from './airports'
 
 export class BasePriceAirportsModel extends Model {
     id!: string
-    from_airport_id!: UUID
-    to_airport_id!: UUID
+    from_airport_id!: string
+    to_airport_id!: string
     departure_code!: string
     arrival_code!: string
     duration!: number
@@ -16,10 +15,15 @@ export class BasePriceAirportsModel extends Model {
     deleted_date!: Date
 
     // types for alias
-    from_city!: string
-    from_code!: string
-    to_city!: string
-    to_code!: string
+    fromAirportId!: string
+    toAirportId!: string
+    fromCity!: string
+    fromCode!: string
+    toCity!: string
+    toCode!: string
+    price!: number
+    createdDate!: Date
+    updatedDate!: Date
 
     static readonly tableName = 'baseprice_airports'
 

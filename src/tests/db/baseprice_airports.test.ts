@@ -24,6 +24,8 @@ test('base price airport', async () => {
         .from('baseprice_airports as bpa')
         .throwIfNotFound()
 
+    const result = await BasePriceAirportsModel.query().findById('3a895256-7cea-41d2-a095-a9bf9671be02')
+
     const updateById = await BasePriceAirportsModel.query()
         .patch({
             airport_price: 95000,
@@ -34,6 +36,7 @@ test('base price airport', async () => {
 
     console.log(updateById)
     console.log(deleteById)
+    console.log(result)
     console.log(results)
 
     expect(updateById).toBeFalsy()

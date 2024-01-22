@@ -312,16 +312,12 @@ router.get('/api/v1/summary/trx/refund', authToken, paymentController.getTransac
  *              items:
  *                  type: object
  *                  properties:
- *                      month:
+ *                      id:
  *                          type: string
- *                      status_code:
- *                          type: number
- *                      transaction_status:
+ *                      city:
  *                          type: string
- *                      transaction_count:
+ *                      code:
  *                          type: string
- *                      transaction_amount:
- *                          type: number
  *      401:
  *        description: Unauthorized
  *        content:
@@ -480,6 +476,10 @@ router.post('/api/v1/airports/baseprice', authToken, basePriceAirportController.
  *                          type: number
  *                      price:
  *                          type: number
+ *                      fromAirportId:
+ *                          type: string
+ *                      toAirportId:
+ *                          type: string
  *                      createdDate:
  *                          type: date
  *                      updatedDate:
@@ -584,6 +584,10 @@ router.get('/api/v1/airports/baseprice', authToken, basePriceAirportController.g
  *                      type: number
  *                  price:
  *                      type: number
+ *                  fromAirportId:
+ *                      type: string
+ *                  toAirportId:
+ *                      type: string
  *                  createdDate:
  *                      type: date
  *                  updatedDate:
@@ -624,6 +628,102 @@ router.get('/api/v1/airports/baseprice', authToken, basePriceAirportController.g
  *                  example: Internal Server Error
  */
 router.patch('/api/v1/airports/baseprice/:id', authToken, basePriceAirportController.updateBasePriceAirport)
+
+/**
+ * @openapi
+ * /api/v1/airports/baseprice/{id}:
+ *  get:
+ *    summary: Get Base Price Airport By Id
+ *    description: Get Base Price Airport By Id
+ *    tags:
+ *      - Airports
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of base price airport
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: array
+ *                 items:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: string
+ *                      fromCity:
+ *                          type: string
+ *                      fromCode:
+ *                          type: string
+ *                      toCity:
+ *                          type: string
+ *                      toCode:
+ *                          type: string
+ *                      duration:
+ *                          type: number
+ *                      price:
+ *                          type: number
+ *                      fromAirportId:
+ *                          type: string
+ *                      toAirportId:
+ *                          type: string
+ *                      createdDate:
+ *                          type: date
+ *                      updatedDate:
+ *                          type: date
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Base Price Airport Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/airports/baseprice/:id', authToken, basePriceAirportController.getBasePriceAirportById)
 
 /**
  * @openapi

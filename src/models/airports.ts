@@ -1,10 +1,9 @@
-import type { UUID } from 'crypto'
 import { Model } from 'objection'
 import type { ModelObject, RelationMappings, RelationMappingsThunk } from 'objection'
 import { BasePriceAirportsModel } from './basePriceAirports'
 
 export class AirportsModel extends Model {
-    id!: UUID
+    id!: string
     name!: string
     code!: string
     city!: string
