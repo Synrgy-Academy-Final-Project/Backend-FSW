@@ -8,6 +8,7 @@ import { authToken } from '../middlewares/authToken'
 import { PaymentController } from '../controllers/payment'
 import { AirportController } from '../controllers/airport'
 import { BasePriceAirportController } from '../controllers/basePriceAirport'
+import { BasePriceDatesController } from '../controllers/basePriceDates'
 
 const router = express.Router()
 
@@ -16,6 +17,7 @@ const userController = new UserController()
 const paymentController = new PaymentController()
 const airportController = new AirportController()
 const basePriceAirportController = new BasePriceAirportController()
+const basePriceDateController = new BasePriceDatesController()
 
 // list route
 
@@ -635,7 +637,7 @@ router.patch('/api/v1/airports/baseprice/:id', authToken, basePriceAirportContro
  *        schema:
  *          type: string
  *          format: uuid
- *        description: UUID of car
+ *        description: UUID of airport
  *    responses:
  *      200:
  *        description: OK
@@ -691,6 +693,315 @@ router.patch('/api/v1/airports/baseprice/:id', authToken, basePriceAirportContro
  *                  example: Internal Server Error
  */
 router.delete('/api/v1/airports/baseprice/:id', authToken, basePriceAirportController.deleteBasePriceAirport)
+
+/**
+ * @openapi
+ * /api/v1/dates/baseprice:
+ *  post:
+ *    summary: Create Base Price Date
+ *    description: Create new Base Price Date
+ *    tags:
+ *      - Dates
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              dateOfDeparture:
+ *               type: date
+ *               example: 2024-01-22
+ *              dayCategory:
+ *               type: string
+ *               example: Hari Libur
+ *              price:
+ *               type: number
+ *    responses:
+ *      201:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  dateOfDeparture:
+ *                      type: string
+ *                  dayCategory:
+ *                      type: string
+ *                  price:
+ *                      type: number
+ *                  createdDate:
+ *                      type: date
+ *                  updatedDate:
+ *                      type: date
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.post('/api/v1/dates/baseprice', authToken, basePriceDateController.saveBasePriceDate)
+
+/**
+ * @openapi
+ * /api/v1/dates/baseprice:
+ *  get:
+ *    summary: Get All Base Price Date
+ *    description: Get All Base Price Date
+ *    tags:
+ *      - Dates
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: array
+ *                 items:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: string
+ *                      dateOfDeparture:
+ *                          type: string
+ *                      dayCategory:
+ *                          type: string
+ *                      price:
+ *                          type: number
+ *                      createdDate:
+ *                          type: date
+ *                      updatedDate:
+ *                          type: date
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Base Price Dates Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/dates/baseprice', authToken, basePriceDateController.getAllBasePriceDate)
+
+/**
+ * @openapi
+ * /api/v1/dates/baseprice/{id}:
+ *  patch:
+ *    summary: Update Base Price Date By Id
+ *    description: Update new Base Price Date By Id
+ *    tags:
+ *      - Dates
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of base price date
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              dateOfDeparture:
+ *               type: date
+ *               example: 2024-01-22
+ *              dayCategory:
+ *               type: string
+ *               example: Hari Biasa
+ *              price:
+ *               type: number
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  dateOfDeparture:
+ *                      type: string
+ *                  dayCategory:
+ *                      type: string
+ *                  price:
+ *                      type: number
+ *                  createdDate:
+ *                      type: date
+ *                  updatedDate:
+ *                      type: date
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.patch('/api/v1/dates/baseprice/:id', authToken, basePriceDateController.updateBasePriceDate)
+
+/**
+ * @openapi
+ * /api/v1/dates/baseprice/{id}:
+ *  delete:
+ *    summary: Delete Base Price Date By Id
+ *    description: Delete new Base Price Date By Id
+ *    tags:
+ *      - Dates
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of date
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      403:
+ *        description: Forbidden
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Forbidden because the private key or token is invalid
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: ID Base Price Date Not Found
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.delete('/api/v1/dates/baseprice/:id', authToken, basePriceDateController.deleteBasePriceDate)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 

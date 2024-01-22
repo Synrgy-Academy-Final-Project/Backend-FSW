@@ -38,7 +38,9 @@ export class BasePriceAirportsRepository {
                 'apto.city as to_city',
                 'apto.code as to_code',
                 'bpa.duration',
-                'bpa.airport_price as price'
+                'bpa.airport_price as price',
+                'bpa.created_date as created_date',
+                'bpa.updated_date as updated_date'
             )
             .join('airports as apfrom', 'apfrom.id', 'bpa.from_airport_id')
             .join('airports as apto', 'apto.id', 'bpa.to_airport_id')
