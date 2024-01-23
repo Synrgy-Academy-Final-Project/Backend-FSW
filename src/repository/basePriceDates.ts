@@ -33,6 +33,13 @@ export class BasePriceDatesRepository {
         )
     }
 
+    public findById = async (id: string): Promise<BasePriceDatesModel> => {
+        return await BasePriceDatesModel.query()
+            .select('id', 'date_from', 'type', 'date_price', 'created_date', 'updated_date')
+            .findById(id)
+            .throwIfNotFound()
+    }
+
     public updateById = async (id: string, dates: Partial<BasePriceDates>): Promise<BasePriceDatesModel[]> => {
         return await BasePriceDatesModel.query().patch(dates).where({ id }).throwIfNotFound().returning('*')
     }
