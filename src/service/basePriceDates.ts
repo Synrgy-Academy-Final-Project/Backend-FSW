@@ -30,7 +30,7 @@ export class BasePriceDateService {
         return await this.basePriceDateRepository.findAll()
     }
 
-    public getBasePriceById = async (id: string): Promise<BasePriceDatesModel> => {
+    public getBasePriceDateById = async (id: string): Promise<BasePriceDatesModel> => {
         return await this.basePriceDateRepository.findById(id)
     }
 
