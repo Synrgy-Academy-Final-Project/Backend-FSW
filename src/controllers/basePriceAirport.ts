@@ -19,6 +19,13 @@ export class BasePriceAirportController {
         try {
             const { fromAirportId, toAirportId, duration, price } = req.body
 
+            if (fromAirportId === toAirportId) {
+                return res.status(400).json({
+                    status: 400,
+                    message: 'From City and To City must be different',
+                })
+            }
+
             const id: string = uuidv4()
 
             const fromAirport = await this.airportService.getAirportById(fromAirportId as UUID)
