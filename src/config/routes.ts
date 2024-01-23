@@ -1033,6 +1033,84 @@ router.patch('/api/v1/dates/baseprice/:id', authToken, basePriceDateController.u
 /**
  * @openapi
  * /api/v1/dates/baseprice/{id}:
+ *  get:
+ *    summary: Get Base Price Date By Id
+ *    description: Get Base Price Date By Id
+ *    tags:
+ *      - Dates
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of base price date
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  dateOfDeparture:
+ *                      type: string
+ *                  dayCategory:
+ *                      type: string
+ *                  price:
+ *                      type: number
+ *                  createdDate:
+ *                      type: date
+ *                  updatedDate:
+ *                      type: date
+ *
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: ID Base Price Date Not Found
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/dates/baseprice/:id', authToken, basePriceDateController.getBasePriceDateById)
+
+/**
+ * @openapi
+ * /api/v1/dates/baseprice/{id}:
  *  delete:
  *    summary: Delete Base Price Date By Id
  *    description: Delete Base Price Date By Id
