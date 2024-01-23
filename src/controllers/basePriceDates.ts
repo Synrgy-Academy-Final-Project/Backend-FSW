@@ -78,7 +78,45 @@ export class BasePriceDatesController {
         }
     }
 
-    public updateBasePriceDate = async (req: Request, res: Response): Promise<void> => {
+    public getBasePriceDateById = async (
+        req: Request,
+        res: Response
+    ): Promise<Response<any, Record<string, any>> | undefined> => {
+        try {
+            const { id } = req.params
+
+            const result = await this.basePriceDateService.getBasePriceById(id)
+
+            res.status(200).json({
+                status: 200,
+                message: 'success',
+                data: {
+                    id: result.id,
+                    dateOfDeparture: result.date_from,
+                    dayCategory: result.type,
+                    price: result.date_price,
+                    createdDate: result.created_date,
+                    updatedDate: result.updated_date,
+                },
+            })
+        } catch (error: any) {
+            console.error(error)
+
+            if (error.statusCode === 404) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'ID Base Price Date Not Found',
+                })
+            }
+
+            res.status(500).json({ status: 500, message: 'Internal Server Error' })
+        }
+    }
+
+    public updateBasePriceDate = async (
+        req: Request,
+        res: Response
+    ): Promise<Response<any, Record<string, any>> | undefined> => {
         try {
             const { id } = req.params
             const { dateOfDeparture, dayCategory, price } = req.body
@@ -106,6 +144,13 @@ export class BasePriceDatesController {
             })
         } catch (error: any) {
             console.error(error)
+
+            if (error.statusCode === 404) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'ID Base Price Date Not Found',
+                })
+            }
 
             res.status(500).json({ status: 500, message: 'Internal Server Error' })
         }
