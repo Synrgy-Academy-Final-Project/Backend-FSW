@@ -42,13 +42,11 @@ export class BasePriceAirportController {
                     ) {
                         duplicateBasePriceAirport = true
                         break
-                    } else {
-                        duplicateBasePriceAirport = false
                     }
                 }
             }
 
-            console.log('duplicate create:', duplicateBasePriceAirport)
+            console.log('duplicate create baseprice airport:', duplicateBasePriceAirport)
 
             if (duplicateBasePriceAirport) {
                 return res.status(409).json({
@@ -177,25 +175,20 @@ export class BasePriceAirportController {
             const basePriceAirports = await this.basePriceAirportService.getAllBasePriceAirport()
             const basePriceAirportById = await this.basePriceAirportService.getBasePriceAirportById(id)
 
-            const fromAirportById = basePriceAirportById.fromAirportId
-            const toAirportById = basePriceAirportById.toAirportId
-
             if (basePriceAirports.length > 0) {
                 for (const basePriceAirport of basePriceAirports) {
                     if (
                         basePriceAirport.fromAirportId === fromAirportId &&
-                        basePriceAirport.toAirportId === toAirportId
+                        basePriceAirport.toAirportId === toAirportId &&
+                        basePriceAirport.id !== basePriceAirportById.id
                     ) {
                         duplicateBasePriceAirport = true
+                        break
                     }
                 }
             }
 
-            if (fromAirportById === fromAirportId && toAirportById === toAirportId) {
-                duplicateBasePriceAirport = false
-            }
-
-            console.log('duplicate update:', duplicateBasePriceAirport)
+            console.log('duplicate update baseprice airport:', duplicateBasePriceAirport)
 
             if (duplicateBasePriceAirport) {
                 return res.status(409).json({

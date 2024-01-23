@@ -11,3 +11,13 @@ export interface BasePriceAirportsType {
     createdDate: Date
     updatedDate: Date
 }
+
+export interface IReqParams {
+    id: string
+}
+
+export interface IReqBody {
+    dateOfDeparture: Date | string
+    dayCategory: string
+    price: number
+}
