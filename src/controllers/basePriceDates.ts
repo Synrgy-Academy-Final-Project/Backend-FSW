@@ -2,6 +2,7 @@
 import type { Request, Response } from 'express'
 import { BasePriceDateService } from '../service/basePriceDates'
 import { v4 as uuidv4 } from 'uuid'
+import type { IReqBody, IReqParams } from '../utils/types'
 
 export class BasePriceDatesController {
     readonly basePriceDateService: BasePriceDateService
@@ -10,20 +11,55 @@ export class BasePriceDatesController {
         this.basePriceDateService = new BasePriceDateService()
     }
 
-    public saveBasePriceDate = async (req: Request, res: Response): Promise<void> => {
+    public saveBasePriceDate = async (
+        req: Request<unknown, unknown, IReqBody>,
+        res: Response
+    ): Promise<Response<any, Record<string, any>> | undefined> => {
         try {
-            const { dateOfDeparture, dayCategory, price } = req.body
+            let { dateOfDeparture, dayCategory, price } = req.body
+
+            dateOfDeparture = new Date(dateOfDeparture).toISOString()
 
             const id: string = uuidv4()
 
-            const createdDate = new Date()
-            const updatedDate = new Date()
+            const createdDate: Date = new Date()
+            const updatedDate: Date = new Date()
+
+            let duplicateBasePriceDate: boolean = false
+
+            const basePriceDates = await this.basePriceDateService.getAllBasePriceDate()
+
+            basePriceDates.filter((basePriceDate) => {
+                // add +7 hour from database date
+                return basePriceDate.dateOfDeparture.setHours(7)
+            })
+
+            if (basePriceDates.length > 0) {
+                for (const basePriceDate of basePriceDates) {
+                    if (
+                        basePriceDate.dateOfDeparture.toISOString() === dateOfDeparture &&
+                        basePriceDate.dayCategory === dayCategory
+                    ) {
+                        duplicateBasePriceDate = true
+                        break
+                    }
+                }
+            }
+
+            console.log('duplicate create baseprice date:', duplicateBasePriceDate)
+
+            if (duplicateBasePriceDate) {
+                return res.status(409).json({
+                    status: 409,
+                    message: 'Duplicate Date and Day Category',
+                })
+            }
 
             const result = await this.basePriceDateService.saveBasePriceDate(
                 id,
-                dateOfDeparture as Date,
-                dayCategory as string,
-                price as number,
+                dateOfDeparture as unknown as Date,
+                dayCategory,
+                price,
                 createdDate,
                 updatedDate
             )
@@ -79,13 +115,13 @@ export class BasePriceDatesController {
     }
 
     public getBasePriceDateById = async (
-        req: Request,
+        req: Request<IReqParams>,
         res: Response
     ): Promise<Response<any, Record<string, any>> | undefined> => {
         try {
             const { id } = req.params
 
-            const result = await this.basePriceDateService.getBasePriceById(id)
+            const result = await this.basePriceDateService.getBasePriceDateById(id)
 
             res.status(200).json({
                 status: 200,
@@ -114,17 +150,52 @@ export class BasePriceDatesController {
     }
 
     public updateBasePriceDate = async (
-        req: Request,
+        req: Request<IReqParams, unknown, IReqBody>,
         res: Response
     ): Promise<Response<any, Record<string, any>> | undefined> => {
         try {
             const { id } = req.params
-            const { dateOfDeparture, dayCategory, price } = req.body
+
+            let { dateOfDeparture, dayCategory, price } = req.body
+
+            dateOfDeparture = new Date(dateOfDeparture).toISOString()
 
             const updatedDate = new Date()
 
+            let duplicateBasePriceDate: boolean = false
+
+            const basePriceDates = await this.basePriceDateService.getAllBasePriceDate()
+            const basePriceDateById = await this.basePriceDateService.getBasePriceDateById(id)
+
+            basePriceDates.filter((basePriceDate) => {
+                // add +7 hour from database date
+                return basePriceDate.dateOfDeparture.setHours(7)
+            })
+
+            if (basePriceDates.length > 0) {
+                for (const basePriceDate of basePriceDates) {
+                    if (
+                        basePriceDate.dateOfDeparture.toISOString() === dateOfDeparture &&
+                        basePriceDate.dayCategory === dayCategory &&
+                        basePriceDate.id !== basePriceDateById.id
+                    ) {
+                        duplicateBasePriceDate = true
+                        break
+                    }
+                }
+            }
+
+            console.log('duplicate update baseprice date:', duplicateBasePriceDate)
+
+            if (duplicateBasePriceDate) {
+                return res.status(409).json({
+                    status: 409,
+                    message: 'Duplicate Date and Day Category',
+                })
+            }
+
             const result = await this.basePriceDateService.updateBasePriceDate(id, {
-                date_from: dateOfDeparture,
+                date_from: dateOfDeparture as unknown as Date,
                 type: dayCategory,
                 date_price: price,
                 updated_date: updatedDate,
@@ -157,7 +228,7 @@ export class BasePriceDatesController {
     }
 
     public deleteBasePriceDate = async (
-        req: Request,
+        req: Request<IReqParams>,
         res: Response
     ): Promise<Response<any, Record<string, any>> | undefined> => {
         try {
