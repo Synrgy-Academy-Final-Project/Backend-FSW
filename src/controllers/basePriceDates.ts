@@ -174,6 +174,10 @@ export class BasePriceDatesController {
 
             if (basePriceDates.length > 0) {
                 for (const basePriceDate of basePriceDates) {
+                    console.log('db:', basePriceDate.dateOfDeparture.toISOString())
+                    console.log('req:', dateOfDeparture)
+                    console.log('db:', basePriceDate.dayCategory)
+                    console.log('req:', dayCategory)
                     if (
                         basePriceDate.dateOfDeparture.toISOString() === dateOfDeparture &&
                         basePriceDate.dayCategory === dayCategory &&
