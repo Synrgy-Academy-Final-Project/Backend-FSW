@@ -29,11 +29,6 @@ export class BasePriceDatesController {
 
             const basePriceDates = await this.basePriceDateService.getAllBasePriceDate()
 
-            basePriceDates.filter((basePriceDate) => {
-                // add +7 hour from database date
-                return basePriceDate.dateOfDeparture.setHours(7)
-            })
-
             if (basePriceDates.length > 0) {
                 for (const basePriceDate of basePriceDates) {
                     if (
@@ -166,11 +161,6 @@ export class BasePriceDatesController {
 
             const basePriceDates = await this.basePriceDateService.getAllBasePriceDate()
             const basePriceDateById = await this.basePriceDateService.getBasePriceDateById(id)
-
-            basePriceDates.filter((basePriceDate) => {
-                // add +7 hour from database date
-                return basePriceDate.dateOfDeparture.setHours(7)
-            })
 
             if (basePriceDates.length > 0) {
                 for (const basePriceDate of basePriceDates) {
