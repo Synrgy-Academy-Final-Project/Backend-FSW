@@ -9,6 +9,8 @@ import { PaymentController } from '../controllers/payment'
 import { AirportController } from '../controllers/airport'
 import { BasePriceAirportController } from '../controllers/basePriceAirport'
 import { BasePriceDatesController } from '../controllers/basePriceDates'
+import { CompanyController } from '../controllers/company'
+import { AirplaneController } from '../controllers/airplane'
 
 const router = express.Router()
 
@@ -18,6 +20,8 @@ const paymentController = new PaymentController()
 const airportController = new AirportController()
 const basePriceAirportController = new BasePriceAirportController()
 const basePriceDateController = new BasePriceDatesController()
+const companyController = new CompanyController()
+const airplaneController = new AirplaneController()
 
 // list route
 
@@ -1180,6 +1184,738 @@ router.get('/api/v1/dates/baseprice/:id', authToken, basePriceDateController.get
  *                  example: Internal Server Error
  */
 router.delete('/api/v1/dates/baseprice/:id', authToken, basePriceDateController.deleteBasePriceDate)
+
+/**
+ * @openapi
+ * /api/v1/companies:
+ *  get:
+ *    summary: Get All Company Maskapai
+ *    description: Get All Company Maskapai
+ *    tags:
+ *      - Companies
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: array
+ *                 items:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: string
+ *                      name:
+ *                          type: string
+ *                      url:
+ *                          type: string
+ *                      created_date:
+ *                          type: date
+ *                      updated_date:
+ *                          type: date
+ *                      deleted_date:
+ *                          type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Company Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/companies', authToken, companyController.getAllCompany)
+
+/**
+ * @openapi
+ * /api/v1/companies/{id}:
+ *  patch:
+ *    summary: Update Company Maskapai By Id
+ *    description: Update Company Maskapai By Id
+ *    tags:
+ *      - Companies
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of company
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name:
+ *               type: string
+ *               example: Garuda Indonesia
+ *              url:
+ *               type: string
+ *               example: link logo
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  name:
+ *                      type: string
+ *                  url:
+ *                      type: string
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *                  deleted_date:
+ *                      type: date
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Company Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.patch('/api/v1/companies/:id', authToken, companyController.updateCompanyById)
+
+/**
+ * @openapi
+ * /api/v1/companies/{id}:
+ *  get:
+ *    summary: Get Company By Id
+ *    description: Get Company By Id
+ *    tags:
+ *      - Companies
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of Company
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  name:
+ *                      type: string
+ *                  url:
+ *                      type: string
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *                  deleted_date:
+ *                      type: date
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Company Not Found
+ *                data:
+ *                  type: object
+ *                  example: {}
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/companies/:id', authToken, companyController.getCompanyById)
+
+/**
+ * @openapi
+ * /api/v1/airplanes:
+ *  post:
+ *    summary: Create Airplane
+ *    description: Create new Airplane
+ *    tags:
+ *      - Airplanes
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name:
+ *               type: string
+ *               example: Airbus A320
+ *              code:
+ *               type: string
+ *               example: PH295
+ *              airplanePrice:
+ *               type: number
+ *              companyId:
+ *               type: string
+ *    responses:
+ *      201:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  name:
+ *                      type: string
+ *                  code:
+ *                      type: string
+ *                  airplane_price:
+ *                      type: number
+ *                  company_id:
+ *                      type: string
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *                  deleted_date:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.post('/api/v1/airplanes', authToken, airplaneController.createAirplane)
+
+/**
+ * @openapi
+ * /api/v1/airplanes:
+ *  get:
+ *    summary: Get All Airplane
+ *    description: Get All Airplane
+ *    tags:
+ *      - Airplanes
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: array
+ *                 items:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: string
+ *                      name:
+ *                          type: string
+ *                      code:
+ *                          type: string
+ *                      airplane_price:
+ *                          type: number
+ *                      company_id:
+ *                          type: string
+ *                      created_date:
+ *                          type: date
+ *                      updated_date:
+ *                          type: date
+ *                      deleted_date:
+ *                          type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Airplanes Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/airplanes', authToken, airplaneController.getAllAirplane)
+
+/**
+ * @openapi
+ * /api/v1/airplanes/{id}:
+ *  patch:
+ *    summary: Update Airplane By Id
+ *    description: Update Airplane By Id
+ *    tags:
+ *      - Airplanes
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of airplane
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name:
+ *               type: string
+ *               example: Airbus A320
+ *              code:
+ *               type: string
+ *               example: PH295
+ *              airplanePrice:
+ *               type: number
+ *              companyId:
+ *               type: string
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  name:
+ *                      type: string
+ *                  code:
+ *                      type: string
+ *                  airplane_price:
+ *                      type: number
+ *                  company_id:
+ *                      type: string
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *                  deleted_date:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Airplane Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.patch('/api/v1/airplanes/:id', authToken, airplaneController.updateAirplaneById)
+
+/**
+ * @openapi
+ * /api/v1/airplanes/{id}:
+ *  get:
+ *    summary: Get Airplane By Id
+ *    description: Get Airplane By Id
+ *    tags:
+ *      - Airplanes
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of airplane
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  name:
+ *                      type: string
+ *                  code:
+ *                      type: string
+ *                  airplane_price:
+ *                      type: number
+ *                  company_id:
+ *                      type: string
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *                  deleted_date:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Airplane Not Found
+ *                data:
+ *                  type: array
+ *                  example: {}
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/airplanes/:id', authToken, airplaneController.getAirplaneById)
+
+/**
+ * @openapi
+ * /api/v1/airplanes/{id}:
+ *  delete:
+ *    summary: Delete Airplane By Id
+ *    description: Delete Airplane By Id
+ *    tags:
+ *      - Airplanes
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of airplane
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Airplane Not Found
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.delete('/api/v1/airplanes/:id', authToken, airplaneController.deleteAirplaneById)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
