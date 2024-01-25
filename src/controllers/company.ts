@@ -82,9 +82,9 @@ export class CompanyController {
     ): Promise<Response<any, Record<string, any>>> => {
         try {
             const { id } = req.params
-            const { name, url } = req.body
+            const { url } = req.body
 
-            const company = await this.companyService.updateCompanyById(id, { name, url })
+            const company = await this.companyService.updateCompanyById(id, { url })
 
             return res.status(200).json({
                 status: 200,
