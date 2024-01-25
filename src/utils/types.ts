@@ -21,8 +21,8 @@ export interface IReqBody {
     dayCategory: string
     price: number
     url: string
-    name: string
-    code: string
+    airplaneName: string
+    airplaneCode: string
     airplanePrice: number
     companyId: string
 }

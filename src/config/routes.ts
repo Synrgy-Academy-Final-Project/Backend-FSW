@@ -1265,203 +1265,6 @@ router.get('/api/v1/companies', authToken, companyController.getAllCompany)
 
 /**
  * @openapi
- * /api/v1/companies/{id}:
- *  patch:
- *    summary: Update Company Maskapai By Id
- *    description: Update Company Maskapai By Id
- *    tags:
- *      - Companies
- *    security:
- *      - bearerAuth: []
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: string
- *          format: uuid
- *        description: UUID of company
- *    requestBody:
- *      content:
- *        application/json:
- *          schema:
- *            type: object
- *            properties:
- *              url:
- *               type: string
- *               example: link logo
- *    responses:
- *      200:
- *        description: OK
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                 type: number
- *                message:
- *                 type: string
- *                data:
- *                 type: object
- *                 properties:
- *                  id:
- *                      type: string
- *                  name:
- *                      type: string
- *                  url:
- *                      type: string
- *                  created_date:
- *                      type: date
- *                  updated_date:
- *                      type: date
- *                  deleted_date:
- *                      type: date
- *      400:
- *        description: Bad Request
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                  type: number
- *                message:
- *                  type: string
- *                  example: Bad Request
- *      401:
- *        description: Unauthorized
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Invalid Token
- *      404:
- *        description: Not Found
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                  type: number
- *                message:
- *                  type: string
- *                  example: ID Company Not Found
- *                data:
- *                  type: array
- *                  example: []
- *      500:
- *        description: Internal Server Error
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Internal Server Error
- */
-router.patch('/api/v1/companies/:id', authToken, companyController.updateCompanyById)
-
-/**
- * @openapi
- * /api/v1/companies/{id}:
- *  get:
- *    summary: Get Company By Id
- *    description: Get Company By Id
- *    tags:
- *      - Companies
- *    security:
- *      - bearerAuth: []
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: string
- *          format: uuid
- *        description: UUID of Company
- *    responses:
- *      200:
- *        description: OK
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                 type: number
- *                message:
- *                 type: string
- *                data:
- *                 type: object
- *                 properties:
- *                  id:
- *                      type: string
- *                  name:
- *                      type: string
- *                  url:
- *                      type: string
- *                  created_date:
- *                      type: date
- *                  updated_date:
- *                      type: date
- *                  deleted_date:
- *                      type: date
- *      400:
- *        description: Bad Request
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                  type: number
- *                message:
- *                  type: string
- *                  example: Bad Request
- *      401:
- *        description: Unauthorized
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Invalid Token
- *      404:
- *        description: Not Found
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                  type: number
- *                message:
- *                  type: string
- *                  example: ID Company Not Found
- *                data:
- *                  type: object
- *                  example: {}
- *      500:
- *        description: Internal Server Error
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Internal Server Error
- */
-router.get('/api/v1/companies/:id', authToken, companyController.getCompanyById)
-
-/**
- * @openapi
  * /api/v1/airplanes:
  *  post:
  *    summary: Create Airplane
@@ -1476,14 +1279,16 @@ router.get('/api/v1/companies/:id', authToken, companyController.getCompanyById)
  *          schema:
  *            type: object
  *            properties:
- *              name:
+ *              airplaneName:
  *               type: string
  *               example: Airbus A320
- *              code:
+ *              airplaneCode:
  *               type: string
  *               example: PH295
  *              airplanePrice:
  *               type: number
+ *              url:
+ *               type: string
  *              companyId:
  *               type: string
  *    responses:
@@ -1569,19 +1374,21 @@ router.post('/api/v1/airplanes', authToken, airplaneController.createAirplane)
  *                  properties:
  *                      id:
  *                          type: string
- *                      name:
+ *                      airlineName:
  *                          type: string
- *                      code:
+ *                      url:
  *                          type: string
- *                      airplane_price:
+ *                      airplaneName:
+ *                          type: string
+ *                      airplaneCode:
+ *                          type: string
+ *                      airplanePrice:
  *                          type: number
- *                      company_id:
+ *                      companyId:
  *                          type: string
  *                      created_date:
  *                          type: date
  *                      updated_date:
- *                          type: date
- *                      deleted_date:
  *                          type: date
  *      401:
  *        description: Unauthorized
@@ -1645,16 +1452,20 @@ router.get('/api/v1/airplanes', authToken, airplaneController.getAllAirplane)
  *          schema:
  *            type: object
  *            properties:
- *              name:
+ *              airplaneName:
  *               type: string
  *               example: Airbus A320
- *              code:
+ *              airplaneCode:
  *               type: string
  *               example: PH295
  *              airplanePrice:
  *               type: number
+ *              url:
+ *               type: string
+ *               example: link logo maskapai (optional)
  *              companyId:
  *               type: string
+ *               example: uuid of company (optional If you want to update the URL of the maskapai logo, you must also fill out the URL field.)
  *    responses:
  *      200:
  *        description: OK
@@ -1672,19 +1483,21 @@ router.get('/api/v1/airplanes', authToken, airplaneController.getAllAirplane)
  *                 properties:
  *                  id:
  *                      type: string
- *                  name:
+ *                  airlineName:
  *                      type: string
- *                  code:
+ *                  url:
  *                      type: string
- *                  airplane_price:
+ *                  airplaneName:
+ *                      type: string
+ *                  airplaneCode:
+ *                      type: string
+ *                  airplanePrice:
  *                      type: number
- *                  company_id:
+ *                  companyId:
  *                      type: string
  *                  created_date:
  *                      type: date
  *                  updated_date:
- *                      type: date
- *                  deleted_date:
  *                      type: date
  *      401:
  *        description: Unauthorized
@@ -1770,19 +1583,21 @@ router.patch('/api/v1/airplanes/:id', authToken, airplaneController.updateAirpla
  *                 properties:
  *                  id:
  *                      type: string
- *                  name:
+ *                  airlineName:
  *                      type: string
- *                  code:
+ *                  url:
  *                      type: string
- *                  airplane_price:
+ *                  airplaneName:
+ *                      type: string
+ *                  airplaneCode:
+ *                      type: string
+ *                  airplanePrice:
  *                      type: number
- *                  company_id:
+ *                  companyId:
  *                      type: string
  *                  created_date:
  *                      type: date
  *                  updated_date:
- *                      type: date
- *                  deleted_date:
  *                      type: date
  *      401:
  *        description: Unauthorized

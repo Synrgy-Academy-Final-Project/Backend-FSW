@@ -7,15 +7,63 @@ export class AirplaneRepository {
     }
 
     public findAll = async (): Promise<AirplanesModel[]> => {
-        return await AirplanesModel.query().throwIfNotFound()
+        return await AirplanesModel.query()
+            .select(
+                'ap.id',
+                'cp.name as airlineName',
+                'cp.url',
+                'ap.name as airplaneName',
+                'ap.code as airplaneCode',
+                'ap.airplane_price as airplanePrice',
+                'ap.company_id as companyId',
+                'ap.created_date',
+                'ap.updated_date'
+            )
+            .join('companies as cp', 'cp.id', 'ap.company_id')
+            .from('airplanes as ap')
     }
 
-    public findById = async (id: string): Promise<AirplanesModel> => {
-        return await AirplanesModel.query().findById(id).throwIfNotFound()
+    public findById = async (id: string): Promise<AirplanesModel[]> => {
+        return await AirplanesModel.query()
+            .select(
+                'ap.id',
+                'cp.name as airlineName',
+                'cp.url',
+                'ap.name as airplaneName',
+                'ap.code as airplaneCode',
+                'ap.airplane_price as airplanePrice',
+                'ap.company_id as companyId',
+                'ap.created_date',
+                'ap.updated_date'
+            )
+            .join('companies as cp', 'cp.id', 'ap.company_id')
+            .from('airplanes as ap')
+            .where('ap.id', id)
+            .throwIfNotFound()
     }
 
     public updateById = async (id: string, airplane: Partial<Airplanes>): Promise<AirplanesModel[]> => {
-        return await AirplanesModel.query().patch(airplane).where({ id }).throwIfNotFound().returning('*')
+        const isUpdated = await AirplanesModel.query().patch(airplane).where({ id }).throwIfNotFound()
+
+        if (isUpdated === 1) {
+            return await AirplanesModel.query()
+                .select(
+                    'ap.id',
+                    'cp.name as airlineName',
+                    'cp.url',
+                    'ap.name as airplaneName',
+                    'ap.code as airplaneCode',
+                    'ap.airplane_price as airplanePrice',
+                    'ap.company_id as companyId',
+                    'ap.created_date',
+                    'ap.updated_date'
+                )
+                .join('companies as cp', 'cp.id', 'ap.company_id')
+                .from('airplanes as ap')
+                .where('ap.id', id)
+        }
+
+        throw new Error('Update failed')
     }
 
     public deleteById = async (id: string): Promise<number> => {
