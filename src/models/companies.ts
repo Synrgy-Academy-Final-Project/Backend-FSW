@@ -5,7 +5,7 @@ import { AirplanesModel } from './airplanes'
 export class CompaniesModel extends Model {
     id!: string
     name!: string
-    url!: string
+    url?: string
     created_date!: Date
     updated_date!: Date
     deleted_date!: Date

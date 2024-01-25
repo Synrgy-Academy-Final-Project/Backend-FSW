@@ -11,7 +11,11 @@ export class AirplanesModel extends Model {
     company_id!: string
     created_date!: Date
     updated_date!: Date
-    deleted_date!: Date | null
+    deleted_date?: Date | null
+
+    // alias
+    airplaneName?: string
+    airplaneCode?: string
 
     static readonly tableName = 'airplanes'
 
