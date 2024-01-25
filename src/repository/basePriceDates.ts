@@ -13,7 +13,7 @@ export class BasePriceDatesRepository {
         return await BasePriceDatesModel.query()
             .insert({
                 id: uuid,
-                date_from: dateOfDeparture,
+                date_time: dateOfDeparture,
                 type: dayCategory,
                 date_price: price,
                 created_date: createdDate,

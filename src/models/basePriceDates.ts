@@ -4,7 +4,7 @@ import type { ModelObject } from 'objection'
 
 export class BasePriceDatesModel extends Model {
     id!: string
-    date_from!: Date
+    date_time!: Date
     date_price!: number
     type!: string
     created_date!: Date

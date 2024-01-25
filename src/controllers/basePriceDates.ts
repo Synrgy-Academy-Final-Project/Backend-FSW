@@ -65,7 +65,7 @@ export class BasePriceDatesController {
                 data: [
                     {
                         id: result.id,
-                        dateOfDeparture: result.date_from,
+                        dateOfDeparture: result.date_time,
                         dayCategory: result.type,
                         price: result.date_price,
                         createdDate: result.created_date,
@@ -123,7 +123,7 @@ export class BasePriceDatesController {
                 message: 'success',
                 data: {
                     id: result.id,
-                    dateOfDeparture: result.date_from,
+                    dateOfDeparture: result.date_time,
                     dayCategory: result.type,
                     price: result.date_price,
                     createdDate: result.created_date,
@@ -185,7 +185,7 @@ export class BasePriceDatesController {
             }
 
             const result = await this.basePriceDateService.updateBasePriceDate(id, {
-                date_from: dateOfDeparture as unknown as Date,
+                date_time: dateOfDeparture as unknown as Date,
                 type: dayCategory,
                 date_price: price,
                 updated_date: updatedDate,
@@ -196,7 +196,7 @@ export class BasePriceDatesController {
                 message: 'update base price date successfully',
                 data: {
                     id: result[0].id,
-                    dateOfDeparture: result[0].date_from,
+                    dateOfDeparture: result[0].date_time,
                     dayCategory: result[0].type,
                     price: result[0].date_price,
                     createdDate: result[0].created_date,
