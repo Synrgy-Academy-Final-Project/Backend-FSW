@@ -25,7 +25,7 @@ export class BasePriceDatesRepository {
     public findAll = async (): Promise<BasePriceDatesModel[]> => {
         return await BasePriceDatesModel.query().select(
             'id',
-            'date_from as dateOfDeparture',
+            'date_time as dateOfDeparture',
             'type as dayCategory',
             'date_price as price',
             'created_date as createdDate',
@@ -35,7 +35,14 @@ export class BasePriceDatesRepository {
 
     public findById = async (id: string): Promise<BasePriceDatesModel> => {
         return await BasePriceDatesModel.query()
-            .select('id', 'date_from', 'type', 'date_price', 'created_date', 'updated_date')
+            .select(
+                'id',
+                'date_time as dateOfDeparture',
+                'type as dayCategory',
+                'date_price as price',
+                'created_date as createdDate',
+                'updated_date as updatedDate'
+            )
             .findById(id)
             .throwIfNotFound()
     }
