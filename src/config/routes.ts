@@ -1286,9 +1286,6 @@ router.get('/api/v1/companies', authToken, companyController.getAllCompany)
  *          schema:
  *            type: object
  *            properties:
- *              name:
- *               type: string
- *               example: Garuda Indonesia
  *              url:
  *               type: string
  *               example: link logo
