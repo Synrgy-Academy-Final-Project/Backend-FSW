@@ -1289,6 +1289,7 @@ router.get('/api/v1/companies', authToken, companyController.getAllCompany)
  *               type: number
  *              url:
  *               type: string
+ *               example: (optional if you want to add or update logo maskapai)
  *              companyId:
  *               type: string
  *    responses:

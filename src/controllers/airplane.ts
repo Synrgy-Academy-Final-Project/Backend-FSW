@@ -40,8 +40,8 @@ export class AirplaneController {
             const createdDate: Date = new Date()
             const updatedDate: Date = new Date()
 
-            // update url logo company or airline
-            await this.companyService.updateCompanyById(companyId, { url })
+            // update url logo company or airline if url is not undefined
+            if (url !== undefined) await this.companyService.updateCompanyById(companyId, { url })
 
             const airplane = await this.airplaneService.createAirplane({
                 id,
