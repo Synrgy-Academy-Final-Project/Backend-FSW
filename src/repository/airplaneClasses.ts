@@ -7,11 +7,36 @@ export class AirplaneClassRepository {
     }
 
     public findAll = async (): Promise<AirplaneClassesModel[]> => {
-        return await AirplaneClassesModel.query().throwIfNotFound()
+        return await AirplaneClassesModel.query()
+            .select(
+                'apc.id',
+                'ap.name as airplaneName',
+                'apc.airplane_class as airplaneClassName',
+                'apc.capacity',
+                'apc.airplane_class_price as airplaneClassPrice',
+                'apc.airplane_id as airplaneId',
+                'apc.created_date',
+                'apc.updated_date'
+            )
+            .join('airplanes as ap', 'ap.id', 'apc.airplane_id')
+            .from('airplane_classes as apc')
     }
 
-    public findById = async (id: string): Promise<AirplaneClassesModel> => {
-        return await AirplaneClassesModel.query().findById(id).throwIfNotFound()
+    public findById = async (id: string): Promise<AirplaneClassesModel[]> => {
+        return await AirplaneClassesModel.query()
+            .select(
+                'apc.id',
+                'ap.name as airplaneName',
+                'apc.airplane_class as airplaneClassName',
+                'apc.capacity',
+                'apc.airplane_class_price as airplaneClassPrice',
+                'apc.created_date',
+                'apc.updated_date'
+            )
+            .join('airplanes as ap', 'ap.id', 'apc.airplane_id')
+            .from('airplane_classes as apc')
+            .where('apc.id', id)
+            .throwIfNotFound()
     }
 
     public updateById = async (

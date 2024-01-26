@@ -11,6 +11,7 @@ import { BasePriceAirportController } from '../controllers/basePriceAirport'
 import { BasePriceDatesController } from '../controllers/basePriceDates'
 import { CompanyController } from '../controllers/company'
 import { AirplaneController } from '../controllers/airplane'
+import { AirplaneClassController } from '../controllers/airplaneClass'
 
 const router = express.Router()
 
@@ -22,6 +23,7 @@ const basePriceAirportController = new BasePriceAirportController()
 const basePriceDateController = new BasePriceDatesController()
 const companyController = new CompanyController()
 const airplaneController = new AirplaneController()
+const airplaneClassController = new AirplaneClassController()
 
 // list route
 
@@ -1729,6 +1731,460 @@ router.get('/api/v1/airplanes/:id', authToken, airplaneController.getAirplaneByI
  *                  example: Internal Server Error
  */
 router.delete('/api/v1/airplanes/:id', authToken, airplaneController.deleteAirplaneById)
+
+/**
+ * @openapi
+ * /api/v1/classes/airplane:
+ *  post:
+ *    summary: Create Airplane Class
+ *    description: Create new Airplane Class
+ *    tags:
+ *      - Classes Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              airplaneId:
+ *               type: string
+ *               example: UUID of airplane
+ *              airplaneClassName:
+ *               type: string
+ *               example: First Class | Business | Premium Economy
+ *              airplaneClassPrice:
+ *               type: number
+ *               example: 450000
+ *              capacity:
+ *               type: number
+ *               example: 150
+ *    responses:
+ *      201:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  airplane_class:
+ *                      type: string
+ *                  airplane_class_price:
+ *                      type: number
+ *                  airplane_id:
+ *                      type: string
+ *                  capacity:
+ *                      type: number
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *                  deleted_date:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.post('/api/v1/classes/airplane', authToken, airplaneClassController.createAirplaneClass)
+
+/**
+ * @openapi
+ * /api/v1/classes/airplane:
+ *  get:
+ *    summary: Get All Airplane Class
+ *    description: Get All Airplane Class
+ *    tags:
+ *      - Classes Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: array
+ *                 items:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: string
+ *                      airplaneName:
+ *                          type: string
+ *                      airplaneClassName:
+ *                          type: string
+ *                      capacity:
+ *                          type: number
+ *                      airplaneClassPrice:
+ *                          type: number
+ *                      airplaneId:
+ *                          type: string
+ *                      created_date:
+ *                          type: date
+ *                      updated_date:
+ *                          type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Airplanes Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/classes/airplane', authToken, airplaneClassController.getAllAirplaneClass)
+
+/**
+ * @openapi
+ * /api/v1/classes/airplane/{id}:
+ *  patch:
+ *    summary: Update Airplane Class By Id
+ *    description: Update Airplane Class By Id
+ *    tags:
+ *      - Classes Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of airplane class
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              airplaneId:
+ *               type: string
+ *               example: UUID of airplane
+ *              airplaneClassName:
+ *               type: string
+ *               example: First Class | Business | Premium Economy
+ *              airplaneClassPrice:
+ *               type: number
+ *              capacity:
+ *               type: number
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  airplane_class:
+ *                      type: string
+ *                  airplane_class_price:
+ *                      type: number
+ *                  airplane_id:
+ *                      type: string
+ *                  capacity:
+ *                      type: number
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *                  deleted_date:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Airplane Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.patch('/api/v1/classes/airplane/:id', authToken, airplaneClassController.updateAirplaneClassById)
+
+/**
+ * @openapi
+ * /api/v1/classes/airplane/{id}:
+ *  get:
+ *    summary: Get Airplane Class By Id
+ *    description: Get Airplane Class By Id
+ *    tags:
+ *      - Classes Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of airplane class
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  airplaneName:
+ *                      type: string
+ *                  airplaneClassName:
+ *                      type: string
+ *                  capacity:
+ *                      type: number
+ *                  airplaneClassPrice:
+ *                      type: number
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Airplane Not Found
+ *                data:
+ *                  type: array
+ *                  example: {}
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/classes/airplane/:id', authToken, airplaneClassController.getAirplaneClassById)
+
+/**
+ * @openapi
+ * /api/v1/classes/airplane/{id}:
+ *  delete:
+ *    summary: Delete Airplane Class By Id
+ *    description: Delete Airplane Class By Id
+ *    tags:
+ *      - Classes Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of airplane class
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Airplane Not Found
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.delete('/api/v1/classes/airplane/:id', authToken, airplaneClassController.deleteAirplaneClassById)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
