@@ -16,7 +16,7 @@ export class AirplaneClassService {
         return await this.airplaneClassRepository.findAll()
     }
 
-    public getAirplaneClassById = async (id: string): Promise<AirplaneClassesModel> => {
+    public getAirplaneClassById = async (id: string): Promise<AirplaneClassesModel[]> => {
         return await this.airplaneClassRepository.findById(id)
     }
 
