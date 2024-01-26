@@ -1,11 +1,14 @@
 import type { Airplanes, AirplanesModel } from '../models/airplanes'
+import { AirplaneServiceRepository } from '../repository/airplaneService'
 import { AirplaneRepository } from '../repository/airplanes'
 
 export class AirplaneService {
     readonly airplaneRepository: AirplaneRepository
+    readonly airplaneServiceRepository: AirplaneServiceRepository
 
     public constructor() {
         this.airplaneRepository = new AirplaneRepository()
+        this.airplaneServiceRepository = new AirplaneServiceRepository()
     }
 
     public createAirplane = async (airplane: Airplanes): Promise<AirplanesModel> => {
@@ -26,5 +29,9 @@ export class AirplaneService {
 
     public deleteAirplaneById = async (id: string): Promise<number> => {
         return await this.airplaneRepository.deleteById(id)
+    }
+
+    public deleteAirplaneServiceById = async (id: string): Promise<number> => {
+        return await this.airplaneServiceRepository.deleteById(id)
     }
 }
