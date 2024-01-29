@@ -12,7 +12,7 @@ test('base price airport', async () => {
     const results = await BasePriceDatesModel.query()
         .select(
             'id',
-            'date_from as dateOfDeparture',
+            'date_time as dateOfDeparture',
             'type as dayCategory',
             'date_price as price',
             'created_date as createdDate',
@@ -28,14 +28,14 @@ test('base price airport', async () => {
             'created_date as createdDate',
             'updated_date as updatedDate'
         )
-        .findById('7ca7c0c9-2650-42e1-a7c9-aadee4b821cd')
+        .findById('43e62192-76f9-403e-a0b6-1e655477463f')
         .throwIfNotFound()
 
     const updateById = await BasePriceDatesModel.query()
         .patch({
             date_price: 50000,
         })
-        .where('id', '163ef350-af79-46e9-afb5-25f612bd4648')
+        .where('id', '43e62192-76f9-403e-a0b6-1e655477463f')
 
     const deleteById = await BasePriceDatesModel.query().deleteById('163ef350-af79-46e9-afb5-25f612bd4648')
 
@@ -45,7 +45,7 @@ test('base price airport', async () => {
     console.log(results)
 
     expect(findById).toBeTruthy()
-    expect(updateById).toBeFalsy()
+    expect(updateById).toBeTruthy()
     expect(deleteById).toBeFalsy()
     expect(results).toBeTruthy()
 }, 20000)

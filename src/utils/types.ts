@@ -29,4 +29,6 @@ export interface IReqBody {
     airplaneClassPrice: number
     capacity: number
     airplaneId: string
+    flightTime: Date
+    airplaneFlightTimePrice: number
 }

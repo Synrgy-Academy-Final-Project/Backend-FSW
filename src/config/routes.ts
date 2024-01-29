@@ -12,6 +12,7 @@ import { BasePriceDatesController } from '../controllers/basePriceDates'
 import { CompanyController } from '../controllers/company'
 import { AirplaneController } from '../controllers/airplane'
 import { AirplaneClassController } from '../controllers/airplaneClass'
+import { AirplaneFlightTimeController } from '../controllers/airplaneFlightTime'
 
 const router = express.Router()
 
@@ -24,6 +25,7 @@ const basePriceDateController = new BasePriceDatesController()
 const companyController = new CompanyController()
 const airplaneController = new AirplaneController()
 const airplaneClassController = new AirplaneClassController()
+const airplaneFlightTimeController = new AirplaneFlightTimeController()
 
 // list route
 
@@ -2185,6 +2187,476 @@ router.get('/api/v1/classes/airplane/:id', authToken, airplaneClassController.ge
  *                  example: Internal Server Error
  */
 router.delete('/api/v1/classes/airplane/:id', authToken, airplaneClassController.deleteAirplaneClassById)
+
+/**
+ * @openapi
+ * /api/v1/flightimes/airplane:
+ *  post:
+ *    summary: Create Airplane Flight Times
+ *    description: Create new Airplane Flight Times
+ *    tags:
+ *      - Flight Times Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              airplaneId:
+ *               type: string
+ *               example: UUID of airplane
+ *              flightTime:
+ *               type: string
+ *               example: 07:00:00
+ *              airplaneFlightTimePrice:
+ *               type: number
+ *               example: 450000
+ *    responses:
+ *      201:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  flight_time:
+ *                      type: string
+ *                  airplane_flight_time_price:
+ *                      type: number
+ *                  airplane_id:
+ *                      type: string
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *                  deleted_date:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      409:
+ *        description: Conflict
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 409
+ *                message:
+ *                  type: string
+ *                  example: Flight Time Airplane is already exist with this airplaneId
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.post('/api/v1/flightimes/airplane', authToken, airplaneFlightTimeController.createAirplaneClass)
+
+/**
+ * @openapi
+ * /api/v1/flightimes/airplane:
+ *  get:
+ *    summary: Get All Airplane Flight Times
+ *    description: Get All Airplane Flight Times
+ *    tags:
+ *      - Flight Times Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: array
+ *                 items:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: string
+ *                      airplaneName:
+ *                          type: string
+ *                      flightTime:
+ *                          type: string
+ *                      airplaneFlightTimePrice:
+ *                          type: number
+ *                      airplaneId:
+ *                          type: string
+ *                      created_date:
+ *                          type: date
+ *                      updated_date:
+ *                          type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Airplanes Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/flightimes/airplane', authToken, airplaneFlightTimeController.getAllAirplaneFlightTime)
+
+/**
+ * @openapi
+ * /api/v1/flightimes/airplane/{id}:
+ *  patch:
+ *    summary: Update Airplane Flight Times By Id
+ *    description: Update Airplane Flight Times By Id
+ *    tags:
+ *      - Flight Times Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of airplane flight time
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              airplaneId:
+ *               type: string
+ *               example: UUID of airplane
+ *              flightTime:
+ *               type: string
+ *               example: 07:00:00
+ *              airplaneFlightTimePrice:
+ *               type: number
+ *               example: 450000
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  flight_time:
+ *                      type: string
+ *                  airplane_flight_time_price:
+ *                      type: number
+ *                  airplane_id:
+ *                      type: string
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *                  deleted_date:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Airplane Not Found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      409:
+ *        description: Conflict
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 409
+ *                message:
+ *                  type: string
+ *                  example: Flight Time Airplane is already exist with this airplaneId
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.patch('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeController.updateAirplaneFlightTimeById)
+
+/**
+ * @openapi
+ * /api/v1/flightimes/airplane/{id}:
+ *  get:
+ *    summary: Get Airplane Flight Times By Id
+ *    description: Get Airplane Flight Times By Id
+ *    tags:
+ *      - Flight Times Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of airplane flight time
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  airplaneName:
+ *                      type: string
+ *                  flightTime:
+ *                      type: string
+ *                  airplaneFlightTimePrice:
+ *                      type: number
+ *                  aiplaneId:
+ *                      type: string
+ *                  created_date:
+ *                      type: date
+ *                  updated_date:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Airplane Not Found
+ *                data:
+ *                  type: array
+ *                  example: {}
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeController.getAirplaneFlightTimeById)
+
+/**
+ * @openapi
+ * /api/v1/flightimes/airplane/{id}:
+ *  delete:
+ *    summary: Delete Airplane Flight Times By Id
+ *    description: Delete Airplane Flight Times By Id
+ *    tags:
+ *      - Flight Times Airplane
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID of airplane flight time
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *      400:
+ *        description: Bad Request
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Bad Request
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Airplane Not Found
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.delete('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeController.deleteAirplaneClassById)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
