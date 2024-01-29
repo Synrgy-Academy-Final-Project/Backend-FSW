@@ -9,7 +9,7 @@ export class AirplaneFlightTimeService {
     }
 
     public createAirplaneFlightTime = async (
-        airplaneFlightTime: AirplaneFlightTimesModel
+        airplaneFlightTime: AirplaneFlightTimes
     ): Promise<AirplaneFlightTimesModel> => {
         return await this.airplaneFlightTimeRepository.save(airplaneFlightTime)
     }
@@ -18,7 +18,7 @@ export class AirplaneFlightTimeService {
         return await this.airplaneFlightTimeRepository.findAll()
     }
 
-    public getAirplaneFlightTimeById = async (id: string): Promise<AirplaneFlightTimesModel> => {
+    public getAirplaneFlightTimeById = async (id: string): Promise<AirplaneFlightTimesModel[]> => {
         return await this.airplaneFlightTimeRepository.findById(id)
     }
 
