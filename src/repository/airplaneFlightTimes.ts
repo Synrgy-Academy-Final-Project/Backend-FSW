@@ -7,11 +7,35 @@ export class AirplaneFlightTimeRepository {
     }
 
     public findAll = async (): Promise<AirplaneFlightTimesModel[]> => {
-        return await AirplaneFlightTimesModel.query().throwIfNotFound()
+        return await AirplaneFlightTimesModel.query()
+            .select(
+                'aft.id',
+                'ap.name as airplaneName',
+                'aft.flight_time as flightTime',
+                'aft.airplane_flight_time_price as airplaneFlightTimePrice',
+                'aft.airplane_id as airplaneId',
+                'aft.created_date as createdDate',
+                'aft.updated_date as updatedDate'
+            )
+            .join('airplanes as ap', 'ap.id', 'aft.airplane_id')
+            .from('airplane_flight_times as aft')
     }
 
-    public findById = async (id: string): Promise<AirplaneFlightTimesModel> => {
-        return await AirplaneFlightTimesModel.query().findById(id).throwIfNotFound()
+    public findById = async (id: string): Promise<AirplaneFlightTimesModel[]> => {
+        return await AirplaneFlightTimesModel.query()
+            .select(
+                'aft.id',
+                'ap.name as airplaneName',
+                'aft.flight_time as flightTime',
+                'aft.airplane_flight_time_price as airplaneFlightTimePrice',
+                'aft.airplane_id as airplaneId',
+                'aft.created_date as createdDate',
+                'aft.updated_date as updatedDate'
+            )
+            .join('airplanes as ap', 'ap.id', 'aft.airplane_id')
+            .from('airplane_flight_times as aft')
+            .where('aft.id', id)
+            .throwIfNotFound()
     }
 
     public updateById = async (
