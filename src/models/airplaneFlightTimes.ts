@@ -9,7 +9,11 @@ export class AirplaneFlightTimesModel extends Model {
     airplane_flight_time_price!: number
     created_date!: Date
     updated_date!: Date
-    deleted_date!: Date
+    deleted_date?: Date
+
+    // alias
+    airplaneId?: string
+    flightTime?: Date
 
     static readonly tableName = 'airplane_flight_times'
 
