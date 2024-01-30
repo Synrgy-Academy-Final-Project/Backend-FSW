@@ -31,7 +31,7 @@ export class AirplaneService {
         return await this.airplaneRepository.deleteById(id)
     }
 
-    public deleteAirplaneServiceById = async (id: string): Promise<number> => {
-        return await this.airplaneServiceRepository.deleteById(id)
+    public deleteAirplaneServiceByAirplaneClassId = async (airplaneClassId: string): Promise<number> => {
+        return await this.airplaneServiceRepository.deleteByAirplaneClassId(airplaneClassId)
     }
 }

@@ -234,7 +234,7 @@ export class AirplaneClassController {
              *  first delete from table airplane_service to be able to delete from table airplane_class
              *  because airplane_class has one relation in table airplane_service
              * */
-            await this.airplaneService.deleteAirplaneServiceById(id)
+            await this.airplaneService.deleteAirplaneServiceByAirplaneClassId(id)
             await this.airplaneClassService.deleteAirplaneClassById(id)
 
             res.status(200).json({
