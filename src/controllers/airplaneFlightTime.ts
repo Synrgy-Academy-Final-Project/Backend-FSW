@@ -98,6 +98,7 @@ export class AirplaneFlightTimeController {
         return res.status(404).json({
           status: 404,
           message: 'Data Airplane Flight Times with this airplaneId is not found!',
+          data: [],
         })
       }
 

@@ -104,6 +104,7 @@ export class AirplaneClassController {
         return res.status(404).json({
           status: 404,
           message: 'Data Airplane Class with this airplaneId is not found!',
+          data: [],
         })
       }
 
