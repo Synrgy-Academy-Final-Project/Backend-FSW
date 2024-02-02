@@ -1818,88 +1818,6 @@ router.post('/api/v1/classes/airplane', authToken, airplaneClassController.creat
 
 /**
  * @openapi
- * /api/v1/classes/airplane:
- *  get:
- *    summary: Get All Airplane Class
- *    description: Get All Airplane Class
- *    tags:
- *      - Classes Airplane
- *    security:
- *      - bearerAuth: []
- *    responses:
- *      200:
- *        description: OK
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                 type: number
- *                message:
- *                 type: string
- *                data:
- *                 type: array
- *                 items:
- *                  type: object
- *                  properties:
- *                      id:
- *                          type: string
- *                      airplaneName:
- *                          type: string
- *                      airplaneClassName:
- *                          type: string
- *                      capacity:
- *                          type: number
- *                      airplaneClassPrice:
- *                          type: number
- *                      airplaneId:
- *                          type: string
- *                      created_date:
- *                          type: date
- *                      updated_date:
- *                          type: date
- *      401:
- *        description: Unauthorized
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Invalid Token
- *      404:
- *        description: Not Found
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                  type: number
- *                  example: 404
- *                message:
- *                  type: string
- *                  example: Airplanes Not Found
- *                data:
- *                  type: array
- *                  example: []
- *      500:
- *        description: Internal Server Error
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Internal Server Error
- */
-router.get('/api/v1/classes/airplane', authToken, airplaneClassController.getAllAirplaneClass)
-
-/**
- * @openapi
  * /api/v1/classes/airplane/{id}:
  *  patch:
  *    summary: Update Airplane Class By Id
@@ -2016,8 +1934,8 @@ router.patch('/api/v1/classes/airplane/:id', authToken, airplaneClassController.
  * @openapi
  * /api/v1/classes/airplane/{id}:
  *  get:
- *    summary: Get Airplane Class By Id
- *    description: Get Airplane Class By Id
+ *    summary: Get Airplane Class By airplaneId
+ *    description: Get Airplane Class By airplaneId
  *    tags:
  *      - Classes Airplane
  *    security:
@@ -2028,7 +1946,7 @@ router.patch('/api/v1/classes/airplane/:id', authToken, airplaneClassController.
  *        schema:
  *          type: string
  *          format: uuid
- *        description: UUID of airplane class
+ *        description: UUID of airplane
  *    responses:
  *      200:
  *        description: OK
@@ -2108,7 +2026,7 @@ router.patch('/api/v1/classes/airplane/:id', authToken, airplaneClassController.
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/classes/airplane/:id', authToken, airplaneClassController.getAirplaneClassById)
+router.get('/api/v1/classes/airplane/:id', authToken, airplaneClassController.getAirplaneClassByAirplaneId)
 
 /**
  * @openapi
@@ -2276,87 +2194,7 @@ router.delete('/api/v1/classes/airplane/:id', authToken, airplaneClassController
  *                  type: string
  *                  example: Internal Server Error
  */
-router.post('/api/v1/flightimes/airplane', authToken, airplaneFlightTimeController.createAirplaneClass)
-
-/**
- * @openapi
- * /api/v1/flightimes/airplane:
- *  get:
- *    summary: Get All Airplane Flight Times
- *    description: Get All Airplane Flight Times
- *    tags:
- *      - Flight Times Airplane
- *    security:
- *      - bearerAuth: []
- *    responses:
- *      200:
- *        description: OK
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                 type: number
- *                message:
- *                 type: string
- *                data:
- *                 type: array
- *                 items:
- *                  type: object
- *                  properties:
- *                      id:
- *                          type: string
- *                      airplaneName:
- *                          type: string
- *                      flightTime:
- *                          type: string
- *                      airplaneFlightTimePrice:
- *                          type: number
- *                      airplaneId:
- *                          type: string
- *                      created_date:
- *                          type: date
- *                      updated_date:
- *                          type: date
- *      401:
- *        description: Unauthorized
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Invalid Token
- *      404:
- *        description: Not Found
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                  type: number
- *                  example: 404
- *                message:
- *                  type: string
- *                  example: Airplanes Not Found
- *                data:
- *                  type: array
- *                  example: []
- *      500:
- *        description: Internal Server Error
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Internal Server Error
- */
-router.get('/api/v1/flightimes/airplane', authToken, airplaneFlightTimeController.getAllAirplaneFlightTime)
+router.post('/api/v1/flightimes/airplane', authToken, airplaneFlightTimeController.createAirplaneFlightTime)
 
 /**
  * @openapi
@@ -2486,8 +2324,8 @@ router.patch('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeCon
  * @openapi
  * /api/v1/flightimes/airplane/{id}:
  *  get:
- *    summary: Get Airplane Flight Times By Id
- *    description: Get Airplane Flight Times By Id
+ *    summary: Get Airplane Flight Times By airplaneId
+ *    description: Get Airplane Flight Times By airplaneId
  *    tags:
  *      - Flight Times Airplane
  *    security:
@@ -2498,7 +2336,7 @@ router.patch('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeCon
  *        schema:
  *          type: string
  *          format: uuid
- *        description: UUID of airplane flight time
+ *        description: UUID of airplane
  *    responses:
  *      200:
  *        description: OK
@@ -2578,7 +2416,7 @@ router.patch('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeCon
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeController.getAirplaneFlightTimeById)
+router.get('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeController.getAirplaneFlightTimeByAirplaneId)
 
 /**
  * @openapi
