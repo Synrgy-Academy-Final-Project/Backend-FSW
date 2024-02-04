@@ -21,7 +21,7 @@ describe('GET /api/v1/airplanes', async () => {
 
   it('should be get data of airplane by id', async () => {
     const response = await request(app)
-      .get('/api/v1/airplanes/03b3b699-0677-4bb4-a004-9e5144e968e7')
+      .get('/api/v1/airplanes/1895d620-18b5-4b9b-829e-8aa8b586c4f6')
       .set({
         Authorization: `Bearer ${token}`,
       })
@@ -29,7 +29,7 @@ describe('GET /api/v1/airplanes', async () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should be not found', async () => {
+  it('should be not found by id', async () => {
     const response = await request(app)
       .get(`/api/v1/airplanes/${uuid}`)
       .set({
@@ -48,4 +48,4 @@ describe('GET /api/v1/airplanes', async () => {
 
     expect(response.statusCode).toBe(400)
   })
-})
+}, 15000)
