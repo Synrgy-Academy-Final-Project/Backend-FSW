@@ -5,48 +5,47 @@ import { v4 as uuidv4 } from 'uuid'
 import { login } from '../../utils/login'
 import { fakerID_ID as faker } from '@faker-js/faker'
 
-describe('PATCH /api/v1/airplanes/:id', async () => {
+describe('DELETE /api/v1/flightimes/airplane/:id', async () => {
   const app = new App().app
   const uuid: string = uuidv4()
   const { token } = await login(request, app)
-  const airplanePrice = faker.number.int({ min: 100000, max: 1000000 })
+  const airplaneId = 'f82bde4c-0b9a-4dde-bade-b58a07215b84'
+  const flightTime = '15:00:00'
+  const airplaneFlightTimePrice = faker.number.int({ min: 100000, max: 1000000 })
+  let id: string = ''
 
-  it('should be updated airplane', async () => {
+  it('should be create airplane flight time', async () => {
     const response = await request(app)
-      .patch('/api/v1/airplanes/8883f3e2-9d73-4da4-b1bc-fb3ae2b17574')
+      .post('/api/v1/flightimes/airplane')
       .set({
         Authorization: `Bearer ${token}`,
       })
       .send({
-        airplaneCode: '310',
-        airplanePrice,
+        airplaneId,
+        flightTime,
+        airplaneFlightTimePrice,
+      })
+
+    id = response.body.data.id
+
+    expect(response.statusCode).toBe(201)
+  })
+
+  it('should be deleted airplane', async () => {
+    const response = await request(app)
+      .delete(`/api/v1/flightimes/airplane/${id}`)
+      .set({
+        Authorization: `Bearer ${token}`,
       })
 
     expect(response.statusCode).toBe(200)
   })
 
-  it('should be duplicate code airplane', async () => {
-    const response = await request(app)
-      .patch('/api/v1/airplanes/8883f3e2-9d73-4da4-b1bc-fb3ae2b17574')
-      .set({
-        Authorization: `Bearer ${token}`,
-      })
-      .send({
-        airplaneCode: 'D95',
-        airplanePrice,
-      })
-
-    expect(response.statusCode).toBe(409)
-  })
-
   it('should be bad request', async () => {
     const response = await request(app)
-      .patch('/api/v1/airplanes/1')
+      .delete('/api/v1/flightimes/airplane/1')
       .set({
         Authorization: `Bearer ${token}`,
-      })
-      .send({
-        airplanePrice,
       })
 
     expect(response.statusCode).toBe(400)
@@ -54,12 +53,9 @@ describe('PATCH /api/v1/airplanes/:id', async () => {
 
   it('should be not found', async () => {
     const response = await request(app)
-      .patch(`/api/v1/airplanes/${uuid}`)
+      .delete(`/api/v1/flightimes/airplane/${uuid}`)
       .set({
         Authorization: `Bearer ${token}`,
-      })
-      .send({
-        airplanePrice,
       })
 
     expect(response.statusCode).toBe(404)

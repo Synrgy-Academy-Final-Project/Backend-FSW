@@ -22,6 +22,7 @@ $ npx knex seed:run --specific=filename.ts --knexfile src/config/knexfile.ts    
 $ npm run keys                                                                  # create private and public key jwt, no passphrase
 $ npm run test                                                                  # run unit test
 $ npm run coverage                                                              # run unit test with coverage
+$ npx vitest tests/folder/filename.test.ts                                      # run test with specific file
 ```
 
 ## Account Login Admin

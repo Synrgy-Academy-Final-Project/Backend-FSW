@@ -81,8 +81,6 @@ export class AirplaneClassController {
     try {
       const { id } = req.params
 
-      console.log(id)
-
       const airplaneClass = await this.airplaneClassService.getAirplaneClassByAirplaneId(id)
 
       res.status(200).json({
@@ -123,6 +121,8 @@ export class AirplaneClassController {
       const { id } = req.params
       const { airplaneId, airplaneClassName, capacity, airplaneClassPrice } = req.body
 
+      if (airplaneId === undefined) throw new Error('airplaneId is required')
+
       const airplaneClasses = await this.airplaneClassService.getAllAirplaneClass()
 
       if (airplaneClasses.length > 0) {
@@ -135,12 +135,7 @@ export class AirplaneClassController {
             id !== airplaneClass.id
           ) {
             isAirplaneClassExist = true
-          } else if (
-            airplaneClassName === airplaneClass.airplaneClassName &&
-            airplaneId === airplaneClass.airplaneId &&
-            id === airplaneClass.id
-          ) {
-            isAirplaneClassExist = false
+            break
           }
         }
 
@@ -188,7 +183,7 @@ export class AirplaneClassController {
 
       res.status(500).json({
         status: 500,
-        message: 'Internal Server Error',
+        message: error.message ?? 'Internal Server Error',
       })
     }
   }

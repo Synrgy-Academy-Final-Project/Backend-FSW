@@ -4,14 +4,14 @@ import App from '../../app'
 import { login } from '../../utils/login'
 import { v4 as uuidv4 } from 'uuid'
 
-describe('GET /api/v1/airplanes', async () => {
+describe('GET /api/v1/classes/airplane', async () => {
   const app = new App().app
   const uuid: string = uuidv4()
   const { token } = await login(request, app)
 
-  it('should be get all data of airplane', async () => {
+  it('should be get data of airplane by airplaneId', async () => {
     const response = await request(app)
-      .get('/api/v1/airplanes')
+      .get('/api/v1/classes/airplane/f82bde4c-0b9a-4dde-bade-b58a07215b84')
       .set({
         Authorization: `Bearer ${token}`,
       })
@@ -19,19 +19,9 @@ describe('GET /api/v1/airplanes', async () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should be get data of airplane by id', async () => {
+  it('should be not found by other uuid', async () => {
     const response = await request(app)
-      .get('/api/v1/airplanes/8883f3e2-9d73-4da4-b1bc-fb3ae2b17574')
-      .set({
-        Authorization: `Bearer ${token}`,
-      })
-
-    expect(response.statusCode).toBe(200)
-  })
-
-  it('should be not found by id', async () => {
-    const response = await request(app)
-      .get(`/api/v1/airplanes/${uuid}`)
+      .get(`/api/v1/classes/airplane/${uuid}`)
       .set({
         Authorization: `Bearer ${token}`,
       })
@@ -41,7 +31,7 @@ describe('GET /api/v1/airplanes', async () => {
 
   it('should be bad request', async () => {
     const response = await request(app)
-      .get('/api/v1/airplanes/1')
+      .get('/api/v1/classes/airplane/1')
       .set({
         Authorization: `Bearer ${token}`,
       })

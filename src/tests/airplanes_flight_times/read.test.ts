@@ -9,9 +9,9 @@ describe('GET /api/v1/airplanes', async () => {
   const uuid: string = uuidv4()
   const { token } = await login(request, app)
 
-  it('should be get all data of airplane', async () => {
+  it('should be get data of airplane by airplaneId', async () => {
     const response = await request(app)
-      .get('/api/v1/airplanes')
+      .get('/api/v1/flightimes/airplane/2bed8291-c32b-46db-b0d3-4ac996a3ba64')
       .set({
         Authorization: `Bearer ${token}`,
       })
@@ -19,19 +19,9 @@ describe('GET /api/v1/airplanes', async () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should be get data of airplane by id', async () => {
+  it('should be not found by other uuid', async () => {
     const response = await request(app)
-      .get('/api/v1/airplanes/8883f3e2-9d73-4da4-b1bc-fb3ae2b17574')
-      .set({
-        Authorization: `Bearer ${token}`,
-      })
-
-    expect(response.statusCode).toBe(200)
-  })
-
-  it('should be not found by id', async () => {
-    const response = await request(app)
-      .get(`/api/v1/airplanes/${uuid}`)
+      .get(`/api/v1/flightimes/airplane/${uuid}`)
       .set({
         Authorization: `Bearer ${token}`,
       })
@@ -41,7 +31,7 @@ describe('GET /api/v1/airplanes', async () => {
 
   it('should be bad request', async () => {
     const response = await request(app)
-      .get('/api/v1/airplanes/1')
+      .get('/api/v1/flightimes/airplane/1')
       .set({
         Authorization: `Bearer ${token}`,
       })
