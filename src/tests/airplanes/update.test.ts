@@ -13,12 +13,12 @@ describe('PATCH /api/v1/airplanes/:id', async () => {
 
   it('should be updated airplane', async () => {
     const response = await request(app)
-      .patch('/api/v1/airplanes/1895d620-18b5-4b9b-829e-8aa8b586c4f6')
+      .patch('/api/v1/airplanes/8883f3e2-9d73-4da4-b1bc-fb3ae2b17574')
       .set({
         Authorization: `Bearer ${token}`,
       })
       .send({
-        airplaneCode: '743',
+        airplaneCode: '310',
         airplanePrice,
       })
 
@@ -27,12 +27,12 @@ describe('PATCH /api/v1/airplanes/:id', async () => {
 
   it('should be duplicate code airplane', async () => {
     const response = await request(app)
-      .patch('/api/v1/airplanes/1895d620-18b5-4b9b-829e-8aa8b586c4f6')
+      .patch('/api/v1/airplanes/8883f3e2-9d73-4da4-b1bc-fb3ae2b17574')
       .set({
         Authorization: `Bearer ${token}`,
       })
       .send({
-        airplaneCode: 'AN7',
+        airplaneCode: 'D95',
         airplanePrice,
       })
 

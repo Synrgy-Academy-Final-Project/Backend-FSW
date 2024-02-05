@@ -21,7 +21,7 @@ describe('GET /api/v1/airplanes', async () => {
 
   it('should be get data of airplane by id', async () => {
     const response = await request(app)
-      .get('/api/v1/airplanes/1895d620-18b5-4b9b-829e-8aa8b586c4f6')
+      .get('/api/v1/airplanes/8883f3e2-9d73-4da4-b1bc-fb3ae2b17574')
       .set({
         Authorization: `Bearer ${token}`,
       })
