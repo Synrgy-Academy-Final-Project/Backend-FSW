@@ -9,7 +9,7 @@ export class TransactionRepository {
         'ud.last_name',
         'ts.departure_code',
         'ts.arrival_code',
-        'ts.created_date',
+        'pm.transaction_time',
         'cp.name as airline',
         'ts.total_price',
         'pm.transaction_status'
