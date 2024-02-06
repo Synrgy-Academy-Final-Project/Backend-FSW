@@ -13,6 +13,7 @@ import { CompanyController } from '../controllers/company'
 import { AirplaneController } from '../controllers/airplane'
 import { AirplaneClassController } from '../controllers/airplaneClass'
 import { AirplaneFlightTimeController } from '../controllers/airplaneFlightTime'
+import { TransactionController } from '../controllers/transaction'
 
 const router = express.Router()
 
@@ -26,6 +27,7 @@ const companyController = new CompanyController()
 const airplaneController = new AirplaneController()
 const airplaneClassController = new AirplaneClassController()
 const airplaneFlightTimeController = new AirplaneFlightTimeController()
+const reportTransaction = new TransactionController()
 
 // list route
 
@@ -2495,6 +2497,74 @@ router.get('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeContr
  *                  example: Internal Server Error
  */
 router.delete('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeController.deleteAirplaneClassById)
+
+/**
+ * @openapi
+ * /api/v1/transactions/report:
+ *  get:
+ *    summary: Get report transactions
+ *    description: Get report transactions
+ *    tags:
+ *      - Transactions
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                id:
+ *                  type: number
+ *                email:
+ *                  type: string
+ *                  format: email
+ *                first_name:
+ *                  type: string
+ *                last_name:
+ *                  type: string
+ *                role:
+ *                  type: string
+ *                active:
+ *                  type: boolean
+ *                iat:
+ *                  type: number
+ *                exp:
+ *                  type: number
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid token
+ *      403:
+ *        description: Forbidden
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Forbidden
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/transactions/report', authToken, reportTransaction.getReportTransaction)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
