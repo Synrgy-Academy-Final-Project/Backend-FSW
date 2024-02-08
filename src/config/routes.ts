@@ -2585,12 +2585,12 @@ router.get('/api/v1/transactions/report', authToken, reportTransaction.getReport
 
 /**
  * @openapi
- * /api/v1/transactions/airplane:
+ * /api/v1/summary/trx/airplane:
  *  get:
  *    summary: Get the most soldout airplane
  *    description: Get the most soldout airplane
  *    tags:
- *      - Transactions
+ *      - Summary
  *    security:
  *      - bearerAuth: []
  *    responses:
@@ -2652,16 +2652,16 @@ router.get('/api/v1/transactions/report', authToken, reportTransaction.getReport
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/transactions/report', authToken, reportTransaction.getTheMostSoldoutAirplanes)
+router.get('/api/v1/summary/trx/airplane', authToken, reportTransaction.getTheMostSoldoutAirplanes)
 
 /**
  * @openapi
- * /api/v1/transactions/airline:
+ * /api/v1/summary/trx//airline:
  *  get:
  *    summary: Get the most soldout airline
  *    description: Get the most soldout airline
  *    tags:
- *      - Transactions
+ *      - Summary
  *    security:
  *      - bearerAuth: []
  *    responses:
@@ -2723,7 +2723,7 @@ router.get('/api/v1/transactions/report', authToken, reportTransaction.getTheMos
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/transactions/report', authToken, reportTransaction.getTheMostSoldoutAirlines)
+router.get('/api/v1/summary/trx/airline', authToken, reportTransaction.getTheMostSoldoutAirlines)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
