@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Request, Response } from 'express'
 import { TransactionService } from '../service/transactions'
 
@@ -8,7 +9,10 @@ export class TransactionController {
     this.transactionService = new TransactionService()
   }
 
-  public getReportTransaction = async (_: Request, res: Response): Promise<void> => {
+  public getReportTransaction = async (
+    _: Request,
+    res: Response
+  ): Promise<Response<any, Record<string, any>> | undefined> => {
     try {
       const reportTransaction = await this.transactionService.getReportTransaction()
 
@@ -17,8 +21,76 @@ export class TransactionController {
         message: 'Success get report transaction',
         data: reportTransaction,
       })
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
+
+      if (error.statusCode === 404) {
+        return res.json({
+          status: 404,
+          message: 'Report transaction not found',
+          data: [],
+        })
+      }
+
+      res.json({
+        status: 500,
+        message: 'Internal Server Error',
+      })
+    }
+  }
+
+  public getTheMostSoldoutAirlines = async (
+    _: Request,
+    res: Response
+  ): Promise<Response<any, Record<string, any>> | undefined> => {
+    try {
+      const mostSoldoutAirlines = await this.transactionService.getTheMostSoldoutAirlines()
+
+      res.json({
+        status: 200,
+        message: 'Success get the most soldout airlines',
+        data: mostSoldoutAirlines,
+      })
+    } catch (error: any) {
+      console.error(error)
+
+      if (error.statusCode === 404) {
+        return res.json({
+          status: 404,
+          message: 'Most soldout airlines not found',
+          data: [],
+        })
+      }
+
+      res.json({
+        status: 500,
+        message: 'Internal Server Error',
+      })
+    }
+  }
+
+  public getTheMostSoldoutAirplanes = async (
+    _: Request,
+    res: Response
+  ): Promise<Response<any, Record<string, any>> | undefined> => {
+    try {
+      const mostSoldoutAirplanes = await this.transactionService.getTheMostSoldoutAirplanes()
+
+      res.json({
+        status: 200,
+        message: 'Success get the most soldout airplanes',
+        data: mostSoldoutAirplanes,
+      })
+    } catch (error: any) {
+      console.error(error)
+
+      if (error.statusCode === 404) {
+        return res.json({
+          status: 404,
+          message: 'Most soldout airplanes not found',
+          data: [],
+        })
+      }
 
       res.json({
         status: 500,
