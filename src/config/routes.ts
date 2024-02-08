@@ -2518,21 +2518,22 @@ router.delete('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeCo
  *              properties:
  *                id:
  *                  type: number
- *                email:
- *                  type: string
- *                  format: email
  *                first_name:
  *                  type: string
  *                last_name:
  *                  type: string
- *                role:
+ *                departure_code:
  *                  type: string
- *                active:
- *                  type: boolean
- *                iat:
+ *                arrival_code:
+ *                  type: string
+ *                transaction_time:
+ *                  type: string
+ *                airline:
+ *                  type: string
+ *                total_price:
  *                  type: number
- *                exp:
- *                  type: number
+ *                transaction_status:
+ *                  type: string
  *      401:
  *        description: Unauthorized
  *        content:
@@ -2553,6 +2554,22 @@ router.delete('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeCo
  *                message:
  *                  type: string
  *                  example: Forbidden
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Report transaction not found
+ *                data:
+ *                  type: array
+ *                  example: []
  *      500:
  *        description: Internal Server Error
  *        content:
@@ -2565,6 +2582,148 @@ router.delete('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeCo
  *                  example: Internal Server Error
  */
 router.get('/api/v1/transactions/report', authToken, reportTransaction.getReportTransaction)
+
+/**
+ * @openapi
+ * /api/v1/transactions/airplane:
+ *  get:
+ *    summary: Get the most soldout airplane
+ *    description: Get the most soldout airplane
+ *    tags:
+ *      - Transactions
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                airplaneName:
+ *                  type: string
+ *                totalSoldout:
+ *                  type: string
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid token
+ *      403:
+ *        description: Forbidden
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Forbidden
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Most soldout airplanes not found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/transactions/report', authToken, reportTransaction.getTheMostSoldoutAirplanes)
+
+/**
+ * @openapi
+ * /api/v1/transactions/airline:
+ *  get:
+ *    summary: Get the most soldout airline
+ *    description: Get the most soldout airline
+ *    tags:
+ *      - Transactions
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                airplaneName:
+ *                  type: string
+ *                totalSoldout:
+ *                  type: string
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid token
+ *      403:
+ *        description: Forbidden
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Forbidden
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Most soldout airline not found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/transactions/report', authToken, reportTransaction.getTheMostSoldoutAirlines)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
