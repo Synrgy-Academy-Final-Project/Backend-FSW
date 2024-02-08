@@ -2656,7 +2656,7 @@ router.get('/api/v1/summary/trx/airplane', authToken, reportTransaction.getTheMo
 
 /**
  * @openapi
- * /api/v1/summary/trx//airline:
+ * /api/v1/summary/trx/airline:
  *  get:
  *    summary: Get the most soldout airline
  *    description: Get the most soldout airline
