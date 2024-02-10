@@ -171,19 +171,26 @@ router.get('/api/v1/users/profile', authToken, userController.profile)
  *            schema:
  *              type: object
  *              properties:
- *                  month:
- *                    type: array
- *                    items:
- *                      type: object
- *                      properties:
- *                        statusCode:
- *                         type: number
- *                        transactionStatus:
- *                         type: string
- *                        transactionCount:
- *                         type: number
- *                        transactionAmount:
- *                         type: number
+ *                 status:
+ *                  type: number
+ *                 message:
+ *                  type: string
+ *                 data:
+ *                  type: object
+ *                  properties:
+ *                    month:
+ *                      type: array
+ *                      items:
+ *                        type: object
+ *                        properties:
+ *                          statusCode:
+ *                            type: number
+ *                          transactionStatus:
+ *                            type: string
+ *                          transactionCount:
+ *                            type: number
+ *                          transactionAmount:
+ *                            type: number
  *      500:
  *        description: Internal Server Error
  *        content:
