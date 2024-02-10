@@ -68,34 +68,4 @@ export class TransactionController {
       })
     }
   }
-
-  public getTheMostSoldoutAirplanes = async (
-    _: Request,
-    res: Response
-  ): Promise<Response<any, Record<string, any>> | undefined> => {
-    try {
-      const mostSoldoutAirplanes = await this.transactionService.getTheMostSoldoutAirplanes()
-
-      res.json({
-        status: 200,
-        message: 'Success get the most soldout airplanes',
-        data: mostSoldoutAirplanes,
-      })
-    } catch (error: any) {
-      console.error(error)
-
-      if (error.statusCode === 404) {
-        return res.json({
-          status: 404,
-          message: 'Most soldout airplanes not found',
-          data: [],
-        })
-      }
-
-      res.json({
-        status: 500,
-        message: 'Internal Server Error',
-      })
-    }
-  }
 }
