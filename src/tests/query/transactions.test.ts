@@ -19,23 +19,47 @@ test('get the most soldout airlines', async () => {
     .from('transactions as ts')
     .throwIfNotFound()
 
-  const data = []
+  // const data = []
+
+  // for (const result of results) {
+  //   data.push({
+  //     airlineName: result.airlineName,
+  //     totalSoldout: result.totalSoldoutAirline,
+  //     airplanes: [
+  //       {
+  //         airplaneName: result.airplaneName,
+  //         totalSoldout: result.totalSoldoutAirplane,
+  //       },
+  //     ],
+  //   })
+  // }
+
+  // console.log(data)
+
+  const airlines = {}
 
   for (const result of results) {
-    data.push({
-      airlineName: result.airlineName,
+    // @ts-expect-error object airlines is not added type
+    if (airlines[result.airlineName] === undefined) {
+      // @ts-expect-error object airlines is not added type
+      airlines[result.airlineName] = {
+        airlineName: result.airlineName,
+        totalSoldout: 0,
+        airplanes: [],
+      }
+    }
+
+    // @ts-expect-error object airlines is not added type
+    airlines[result.airlineName].totalSoldout += Number(result.totalSoldoutAirline)
+    // @ts-expect-error object airlines is not added type
+    airlines[result.airlineName].airplanes.push({
       airplaneName: result.airplaneName,
-      totalSoldoutAirline: result.totalSoldoutAirline,
-      airplanes: [
-        {
-          airplaneName: result.airplaneName,
-          totalSoldoutAirplane: result.totalSoldoutAirplane,
-        },
-      ],
+      totalSoldout: result.totalSoldoutAirplane,
     })
   }
 
-  console.log(data)
+  const finalResults = Object.values(airlines)
+  console.log(finalResults)
 
   expect(results).toBeTruthy()
 }, 15000)

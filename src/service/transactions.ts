@@ -13,24 +13,33 @@ export class TransactionService {
     return await this.transactionRepository.findReportTransaction()
   }
 
-  public getTheMostSoldoutAirline = async (): Promise<TransactionAirlines[]> => {
+  public getTheMostSoldoutAirline = async (): Promise<TransactionAirlines[] | unknown> => {
     const results = await this.transactionRepository.findTheMostSoldoutAirlines()
 
-    const data = []
+    const airlines = {}
 
     for (const result of results) {
-      data.push({
-        airlineName: result.airlineName,
-        totalSoldout: result.totalSoldoutAirline,
-        airplanes: [
-          {
-            airplaneName: result.airplaneName,
-            totalSoldout: result.totalSoldoutAirplane,
-          },
-        ],
+      // @ts-expect-error object airlines is not added type
+      if (airlines[result.airlineName] === undefined) {
+        // @ts-expect-error object airlines is not added type
+        airlines[result.airlineName] = {
+          airlineName: result.airlineName,
+          totalSoldout: 0,
+          airplanes: [],
+        }
+      }
+
+      // @ts-expect-error object airlines is not added type
+      airlines[result.airlineName].totalSoldout += Number(result.totalSoldoutAirline)
+      // @ts-expect-error object airlines is not added type
+      airlines[result.airlineName].airplanes.push({
+        airplaneName: result.airplaneName,
+        totalSoldout: result.totalSoldoutAirplane,
       })
     }
 
-    return data
+    const finalResults = Object.values(airlines)
+
+    return finalResults
   }
 }
