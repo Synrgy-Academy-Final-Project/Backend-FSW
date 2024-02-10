@@ -13,8 +13,12 @@ export class PaymentController {
     res: Response
   ): Promise<Response<unknown, Record<string, unknown>>> => {
     try {
-      const transaction = await this.paymentService.getTransactionPayments()
-      return res.status(200).json(transaction)
+      const transactionPayments = await this.paymentService.getTransactionPayments()
+      return res.status(200).json({
+        status: 200,
+        message: 'Successfully retrieved transaction payments',
+        data: transactionPayments,
+      })
     } catch (err: unknown) {
       console.error(err)
       return res.status(500).json({ message: 'Internal Server Error' })
