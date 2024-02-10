@@ -215,10 +215,28 @@ router.get('/api/v1/summary/trx/payments', authToken, paymentController.getTrans
  *            schema:
  *              type: object
  *              properties:
- *                airplaneName:
+ *                status:
+ *                  type: number
+ *                message:
  *                  type: string
- *                totalSoldout:
- *                  type: string
+ *                data:
+ *                  type: array
+ *                  items:
+ *                    type: object
+ *                    properties:
+ *                     airlineName:
+ *                      type: string
+ *                     totalSoldout:
+ *                      type: number
+ *                     airplanes:
+ *                      type: array
+ *                      items:
+ *                        type: object
+ *                        properties:
+ *                          airplaneName:
+ *                            type: string
+ *                          totalSoldout:
+ *                            type: number
  *      401:
  *        description: Unauthorized
  *        content:

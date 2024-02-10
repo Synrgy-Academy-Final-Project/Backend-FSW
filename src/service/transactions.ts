@@ -34,7 +34,7 @@ export class TransactionService {
       // @ts-expect-error object airlines is not added type
       airlines[result.airlineName].airplanes.push({
         airplaneName: result.airplaneName,
-        totalSoldout: result.totalSoldoutAirplane,
+        totalSoldout: Number(result.totalSoldoutAirplane),
       })
     }
 
