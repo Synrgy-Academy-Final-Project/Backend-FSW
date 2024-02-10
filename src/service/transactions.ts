@@ -13,7 +13,7 @@ export class TransactionService {
     return await this.transactionRepository.findReportTransaction()
   }
 
-  public getTheMostSoldoutAirline = async (): Promise<TransactionAirlines[] | unknown> => {
+  public getTheMostSoldoutAirlines = async (): Promise<TransactionAirlines[] | unknown> => {
     const results = await this.transactionRepository.findTheMostSoldoutAirlines()
 
     const airlines = {}

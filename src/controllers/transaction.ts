@@ -39,12 +39,12 @@ export class TransactionController {
     }
   }
 
-  public getTheMostSoldoutAirline = async (
+  public getTheMostSoldoutAirlines = async (
     _: Request,
     res: Response
   ): Promise<Response<any, Record<string, any>> | undefined> => {
     try {
-      const data = await this.transactionService.getTheMostSoldoutAirline()
+      const data = await this.transactionService.getTheMostSoldoutAirlines()
 
       res.json({
         status: 200,
