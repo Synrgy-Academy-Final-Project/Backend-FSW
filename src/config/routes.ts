@@ -165,7 +165,7 @@ router.get('/api/v1/users/profile', authToken, userController.profile)
  *      - bearerAuth: []
  *    responses:
  *      200:
- *        description: OK
+ *        description: OK SIR
  *        content:
  *          application/json:
  *            schema:
