@@ -2585,6 +2585,77 @@ router.get('/api/v1/transactions/report', authToken, reportTransaction.getReport
 
 /**
  * @openapi
+ * /api/v1/summary/trx/airlines:
+ *  get:
+ *    summary: Get the most soldout airlines
+ *    description: Get the most soldout airlines
+ *    tags:
+ *      - Summary
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                airplaneName:
+ *                  type: string
+ *                totalSoldout:
+ *                  type: string
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid token
+ *      403:
+ *        description: Forbidden
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Forbidden
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Most soldout airline not found
+ *                data:
+ *                  type: array
+ *                  example: []
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/summary/trx/airlines', authToken, reportTransaction.getTheMostSoldoutAirlines)
+
+/**
+ * @openapi
  * /api/v1/summary/trx/airline:
  *  get:
  *    summary: Get the most soldout airline
@@ -2652,7 +2723,7 @@ router.get('/api/v1/transactions/report', authToken, reportTransaction.getReport
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/summary/trx/airline', authToken, reportTransaction.getTheMostSoldoutAirlines)
+router.get('/api/v1/summary/trx/airline', authToken, reportTransaction.getTheMostSoldoutAirline)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 

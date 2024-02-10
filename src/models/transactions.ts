@@ -26,6 +26,12 @@ export class TransactionsModel extends Model {
   updated_date!: Date
   deleted_date!: Date
 
+  // types alias
+  airlineName?: string
+  totalSoldoutAirline?: number
+  airplaneName?: string
+  totalSoldoutAirplane?: number
+
   static readonly tableName = 'transactions'
 
   static relationMappings: RelationMappings | RelationMappingsThunk = {

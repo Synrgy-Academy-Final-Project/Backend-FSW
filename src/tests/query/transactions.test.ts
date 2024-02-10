@@ -19,7 +19,23 @@ test('get the most soldout airlines', async () => {
     .from('transactions as ts')
     .throwIfNotFound()
 
-  console.log(results)
+  const data = []
+
+  for (const result of results) {
+    data.push({
+      airlineName: result.airlineName,
+      airplaneName: result.airplaneName,
+      totalSoldoutAirline: result.totalSoldoutAirline,
+      airplanes: [
+        {
+          airplaneName: result.airplaneName,
+          totalSoldoutAirplane: result.totalSoldoutAirplane,
+        },
+      ],
+    })
+  }
+
+  console.log(data)
 
   expect(results).toBeTruthy()
 }, 15000)
