@@ -39,3 +39,10 @@ export interface TransactionAirlines {
   airplaneName?: string
   airplanes?: object[]
 }
+
+export interface TransactionPayments {
+  status_code: number
+  transaction_status: string
+  transaction_count: string
+  transaction_amount: number
+}
