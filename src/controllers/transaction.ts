@@ -39,36 +39,6 @@ export class TransactionController {
     }
   }
 
-  public getTheMostSoldoutAirlines = async (
-    _: Request,
-    res: Response
-  ): Promise<Response<any, Record<string, any>> | undefined> => {
-    try {
-      const data = await this.transactionService.getTheMostSoldoutAirlines()
-
-      res.json({
-        status: 200,
-        message: 'Success get the most soldout airlines',
-        data,
-      })
-    } catch (error: any) {
-      console.error(error)
-
-      if (error.statusCode === 404) {
-        return res.json({
-          status: 404,
-          message: 'Most soldout airlines not found',
-          data: [],
-        })
-      }
-
-      res.json({
-        status: 500,
-        message: 'Internal Server Error',
-      })
-    }
-  }
-
   public getTheMostSoldoutAirline = async (
     _: Request,
     res: Response
