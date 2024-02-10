@@ -155,10 +155,10 @@ router.get('/api/v1/users/profile', authToken, userController.profile)
 
 /**
  * @openapi
- * /api/v1/summary/trx/success:
+ * /api/v1/summary/trx/payments:
  *  get:
- *    summary: Get transaction success
- *    description: Get summary transaction success
+ *    summary: Get transaction payments
+ *    description: Get summary transaction payments
  *    tags:
  *      - Summary
  *    security:
@@ -169,20 +169,21 @@ router.get('/api/v1/users/profile', authToken, userController.profile)
  *        content:
  *          application/json:
  *            schema:
- *              type: array
- *              items:
- *                  type: object
- *                  properties:
- *                      month:
- *                          type: string
- *                      status_code:
- *                          type: number
- *                      transaction_status:
- *                          type: string
- *                      transaction_count:
- *                          type: string
- *                      transaction_amount:
- *                          type: number
+ *              type: object
+ *              properties:
+ *                  month:
+ *                    type: array
+ *                    items:
+ *                      type: object
+ *                      properties:
+ *                        statusCode:
+ *                         type: number
+ *                        transactionStatus:
+ *                         type: string
+ *                        transactionCount:
+ *                         type: number
+ *                        transactionAmount:
+ *                         type: number
  *      500:
  *        description: Internal Server Error
  *        content:
@@ -194,38 +195,30 @@ router.get('/api/v1/users/profile', authToken, userController.profile)
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/summary/trx/success', authToken, paymentController.getTransactionSuccess)
+router.get('/api/v1/summary/trx/payments', authToken, paymentController.getTransactionPayments)
 
 /**
  * @openapi
- * /api/v1/summary/trx/failed:
+ * /api/v1/summary/trx/airlines:
  *  get:
- *    summary: Get transaction failed
- *    description: Get summary transaction failed
+ *    summary: Get the most soldout airlines
+ *    description: Get the most soldout airlines
  *    tags:
  *      - Summary
  *    security:
  *      - bearerAuth: []
  *    responses:
- *      202:
- *        description: Accepted
+ *      200:
+ *        description: OK
  *        content:
  *          application/json:
  *            schema:
- *              type: array
- *              items:
- *                  type: object
- *                  properties:
- *                      month:
- *                          type: string
- *                      status_code:
- *                          type: number
- *                      transaction_status:
- *                          type: string
- *                      transaction_count:
- *                          type: string
- *                      transaction_amount:
- *                          type: number
+ *              type: object
+ *              properties:
+ *                airplaneName:
+ *                  type: string
+ *                totalSoldout:
+ *                  type: string
  *      401:
  *        description: Unauthorized
  *        content:
@@ -235,7 +228,33 @@ router.get('/api/v1/summary/trx/success', authToken, paymentController.getTransa
  *              properties:
  *                message:
  *                  type: string
- *                  example: Invalid Token
+ *                  example: Invalid token
+ *      403:
+ *        description: Forbidden
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Forbidden
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Most soldout airline not found
+ *                data:
+ *                  type: array
+ *                  example: []
  *      500:
  *        description: Internal Server Error
  *        content:
@@ -247,60 +266,7 @@ router.get('/api/v1/summary/trx/success', authToken, paymentController.getTransa
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/summary/trx/failed', authToken, paymentController.getTransactionFailed)
-
-/**
- * @openapi
- * /api/v1/summary/trx/refund:
- *  get:
- *    summary: Get transaction refund
- *    description: Get summary transaction refund
- *    tags:
- *      - Summary
- *    security:
- *      - bearerAuth: []
- *    responses:
- *      201:
- *        description: Created
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                  type: object
- *                  properties:
- *                      month:
- *                          type: string
- *                      status_code:
- *                          type: number
- *                      transaction_status:
- *                          type: string
- *                      transaction_count:
- *                          type: string
- *                      transaction_amount:
- *                          type: number
- *      401:
- *        description: Unauthorized
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Invalid Token
- *      500:
- *        description: Internal Server Error
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Internal Server Error
- */
-router.get('/api/v1/summary/trx/refund', authToken, paymentController.getTransactionRefund)
+router.get('/api/v1/summary/trx/airlines', authToken, reportTransaction.getTheMostSoldoutAirlines)
 
 /**
  * @openapi
@@ -2582,77 +2548,6 @@ router.delete('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeCo
  *                  example: Internal Server Error
  */
 router.get('/api/v1/transactions/report', authToken, reportTransaction.getReportTransaction)
-
-/**
- * @openapi
- * /api/v1/summary/trx/airline:
- *  get:
- *    summary: Get the most soldout airline
- *    description: Get the most soldout airline
- *    tags:
- *      - Summary
- *    security:
- *      - bearerAuth: []
- *    responses:
- *      200:
- *        description: OK
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                airplaneName:
- *                  type: string
- *                totalSoldout:
- *                  type: string
- *      401:
- *        description: Unauthorized
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Invalid token
- *      403:
- *        description: Forbidden
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Forbidden
- *      404:
- *        description: Not Found
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                status:
- *                  type: number
- *                  example: 404
- *                message:
- *                  type: string
- *                  example: Most soldout airline not found
- *                data:
- *                  type: array
- *                  example: []
- *      500:
- *        description: Internal Server Error
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: Internal Server Error
- */
-router.get('/api/v1/summary/trx/airline', authToken, reportTransaction.getTheMostSoldoutAirline)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
