@@ -9,17 +9,13 @@ export class TicketService {
   }
 
   public getTransactionTickets = async (): Promise<TicketsModel[] | unknown> => {
-    try {
-      const results = await this.ticketRepository.findTransactionTickets()
+    const results = await this.ticketRepository.findTransactionTickets()
 
-      const ticketsByDate = results.map((result) => ({
-        date: result.date,
-        total: Number(result.total),
-      }))
+    const ticketsByDate = results.map((result) => ({
+      date: result.date,
+      total: Number(result.total),
+    }))
 
-      return ticketsByDate
-    } catch (error) {
-      console.error(error)
-    }
+    return ticketsByDate
   }
 }
