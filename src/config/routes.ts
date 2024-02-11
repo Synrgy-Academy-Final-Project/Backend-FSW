@@ -14,9 +14,11 @@ import { AirplaneController } from '../controllers/airplane'
 import { AirplaneClassController } from '../controllers/airplaneClass'
 import { AirplaneFlightTimeController } from '../controllers/airplaneFlightTime'
 import { TransactionController } from '../controllers/transaction'
+import { TicketController } from '../controllers/tickets'
 
 const router = express.Router()
 
+// list controllers
 const homeController = new HomeController()
 const userController = new UserController()
 const paymentController = new PaymentController()
@@ -28,9 +30,9 @@ const airplaneController = new AirplaneController()
 const airplaneClassController = new AirplaneClassController()
 const airplaneFlightTimeController = new AirplaneFlightTimeController()
 const reportTransaction = new TransactionController()
+const ticketController = new TicketController()
 
-// list route
-
+// list routes
 router.get('/', homeController.index)
 
 /**
@@ -203,6 +205,48 @@ router.get('/api/v1/users/profile', authToken, userController.profile)
  *                  example: Internal Server Error
  */
 router.get('/api/v1/summary/trx/payments', authToken, paymentController.getTransactionPayments)
+
+/**
+ * @openapi
+ * /api/v1/summary/trx/tickets:
+ *  get:
+ *    summary: Get transaction tickets
+ *    description: Get summary transaction tickets
+ *    tags:
+ *      - Summary
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                 status:
+ *                  type: number
+ *                 message:
+ *                  type: string
+ *                 data:
+ *                  type: object
+ *                  properties:
+ *                    date:
+ *                      type: string
+ *                    total:
+ *                      type: number
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/summary/trx/tickets', authToken, ticketController.getTransactionTickets)
 
 /**
  * @openapi

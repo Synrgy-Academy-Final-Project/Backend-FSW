@@ -3,6 +3,7 @@ import type { ModelObject, RelationMappings, RelationMappingsThunk } from 'objec
 import { UsersModel } from './users'
 import { PaymentsModel } from './payments'
 import { AirplanesModel } from './airplanes'
+import { TicketsModel } from './tickets'
 
 export class TransactionsModel extends Model {
   id!: string
@@ -57,6 +58,14 @@ export class TransactionsModel extends Model {
       join: {
         from: 'transactions.id',
         to: 'payments.transaction_id',
+      },
+    },
+    tickets: {
+      relation: Model.HasOneRelation,
+      modelClass: TicketsModel,
+      join: {
+        from: 'transactions.id',
+        to: 'tickets.transaction_id',
       },
     },
   }
