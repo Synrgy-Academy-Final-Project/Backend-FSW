@@ -21,7 +21,7 @@ export class TicketController {
       })
     } catch (err: unknown) {
       console.error(err)
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ status: 500, message: 'Internal Server Error' })
     }
   }
 }
