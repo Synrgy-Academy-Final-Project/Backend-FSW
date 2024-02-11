@@ -9,31 +9,27 @@ export class PaymentService {
   }
 
   public getTransactionPayments = async (): Promise<TransactionPayments[] | unknown> => {
-    try {
-      const results = await this.paymentRepository.findTransactionPayments()
+    const results = await this.paymentRepository.findTransactionPayments()
 
-      const transactionsByMonth = {}
+    const transactionsByMonth = {}
 
-      for (const result of results) {
-        const month = result.month.trim()
+    for (const result of results) {
+      const month = result.month.trim()
+      // @ts-expect-error object airlines is not added type
+      if (transactionsByMonth[month] === undefined) {
         // @ts-expect-error object airlines is not added type
-        if (transactionsByMonth[month] === undefined) {
-          // @ts-expect-error object airlines is not added type
-          transactionsByMonth[month] = []
-        }
-
-        // @ts-expect-error object airlines is not added type
-        transactionsByMonth[month].push({
-          statusCode: result.status_code,
-          transactionStatus: result.transaction_status,
-          transactionCount: Number(result.transaction_count),
-          transactionAmount: Number(result.transaction_amount),
-        })
+        transactionsByMonth[month] = []
       }
 
-      return transactionsByMonth
-    } catch (error) {
-      console.error(error)
+      // @ts-expect-error object airlines is not added type
+      transactionsByMonth[month].push({
+        statusCode: result.status_code,
+        transactionStatus: result.transaction_status,
+        transactionCount: Number(result.transaction_count),
+        transactionAmount: Number(result.transaction_amount),
+      })
     }
+
+    return transactionsByMonth
   }
 }
