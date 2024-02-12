@@ -1,6 +1,5 @@
 import type { TransactionsModel } from '../models/transactions'
 import { TransactionRepository } from '../repository/transactions'
-import type { TransactionAirlines } from '../utils/types'
 
 export class TransactionService {
   readonly transactionRepository: TransactionRepository
@@ -13,7 +12,7 @@ export class TransactionService {
     return await this.transactionRepository.findReportTransaction()
   }
 
-  public getTheMostSoldoutAirlines = async (): Promise<TransactionAirlines[] | unknown> => {
+  public getTheMostSoldoutAirlines = async (): Promise<TransactionsModel[] | unknown> => {
     const results = await this.transactionRepository.findTheMostSoldoutAirlines()
 
     const airlines = {}

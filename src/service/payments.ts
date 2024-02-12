@@ -1,5 +1,5 @@
+import type { PaymentsModel } from '../models/payments'
 import { PaymentRepository } from '../repository/payments'
-import type { TransactionPayments } from '../utils/types'
 
 export class PaymentService {
   readonly paymentRepository: PaymentRepository
@@ -8,7 +8,7 @@ export class PaymentService {
     this.paymentRepository = new PaymentRepository()
   }
 
-  public getTransactionPayments = async (): Promise<TransactionPayments[] | unknown> => {
+  public getTransactionPayments = async (): Promise<PaymentsModel[] | unknown> => {
     const results = await this.paymentRepository.findTransactionPayments()
 
     const transactionsByMonth = {}
