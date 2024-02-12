@@ -1,11 +1,12 @@
+import { raw } from 'objection'
 import { TicketsModel } from '../models/tickets'
 
 export class TicketRepository {
   public findTransactionTickets = async (): Promise<TicketsModel[]> => {
     return await TicketsModel.query()
-      .select('created_date as date')
+      .select(raw("to_char(created_date, 'DD-MM-YYYY') as date"))
       .count('id as total')
-      .groupBy('created_date')
+      .groupBy(raw("to_char(created_date, 'DD-MM-YYYY')"))
       .orderBy('total', 'desc')
       .throwIfNotFound()
   }
