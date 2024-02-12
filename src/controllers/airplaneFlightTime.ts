@@ -71,7 +71,7 @@ export class AirplaneFlightTimeController {
   }
 
   public getAirplaneFlightTimeByAirplaneId = async (
-    req: Request,
+    req: Request<IReqParams>,
     res: Response
   ): Promise<Response<any, Record<string, any>> | undefined> => {
     try {
