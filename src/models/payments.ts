@@ -1,10 +1,9 @@
-import type { UUID } from 'crypto'
 import { Model } from 'objection'
 import type { ModelObject, RelationMappings, RelationMappingsThunk } from 'objection'
 import { TransactionsModel } from './transactions'
 
 export class PaymentsModel extends Model {
-  id!: UUID
+  id!: string
   transaction_time!: string
   transaction_status!: string
   transaction_id!: string
@@ -21,9 +20,9 @@ export class PaymentsModel extends Model {
   bank!: string
   store!: string
   va_number!: string
-  created_date!: EpochTimeStamp
-  updated_date!: EpochTimeStamp
-  deleted_date!: EpochTimeStamp
+  created_date!: Date
+  updated_date!: Date
+  deleted_date!: Date
 
   // types alias
   month!: string
