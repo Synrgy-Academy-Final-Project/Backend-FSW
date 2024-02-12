@@ -17,6 +17,11 @@ export interface IReqParams {
 }
 
 export interface IReqBody {
+  email: string
+  password: string
+  fromAirportId: string
+  toAirportId: string
+  duration: number
   dateOfDeparture: Date | string
   dayCategory: string
   price: number
@@ -31,18 +36,4 @@ export interface IReqBody {
   airplaneId: string
   flightTime: Date
   airplaneFlightTimePrice: number
-}
-
-export interface TransactionAirlines {
-  airlineName?: string
-  totalSoldout?: number
-  airplaneName?: string
-  airplanes?: object[]
-}
-
-export interface TransactionPayments {
-  status_code: number
-  transaction_status: string
-  transaction_count: string
-  transaction_amount: number
 }
