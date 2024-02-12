@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcrypt'
 import path from 'path'
 import { UserService } from '../service/users'
+import type { IReqBody } from '../utils/types'
 
 export class UserController {
   readonly userService: UserService
@@ -14,10 +15,13 @@ export class UserController {
     this.privateKey = readFileSync(path.join(process.cwd(), 'keys', 'jwtRS256.key'))
   }
 
-  public login = async (req: Request, res: Response): Promise<Response<unknown, Record<string, unknown>>> => {
+  public login = async (
+    req: Request<unknown, unknown, IReqBody>,
+    res: Response
+  ): Promise<Response<unknown, Record<string, unknown>>> => {
     try {
-      const email = req.body.email as string
-      const password = req.body.password as string
+      const email = req.body.email
+      const password = req.body.password
 
       const user = await this.userService.getUserByEmail(email)
       console.log(user)

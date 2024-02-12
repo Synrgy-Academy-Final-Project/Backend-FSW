@@ -1,10 +1,9 @@
-import type { UUID } from 'crypto'
 import { Model } from 'objection'
 import type { JSONSchema, ModelObject, RelationMappings, RelationMappingsThunk } from 'objection'
 import { UsersModel } from './users'
 
 export class RolesModel extends Model {
-  id!: UUID
+  id!: string
   name!: string
   created_date!: EpochTimeStamp
   updated_date!: EpochTimeStamp

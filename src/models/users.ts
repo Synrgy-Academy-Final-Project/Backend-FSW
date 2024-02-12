@@ -1,4 +1,3 @@
-import type { UUID } from 'crypto'
 import { Model } from 'objection'
 import type { JSONSchema, ModelObject, RelationMappings, RelationMappingsThunk } from 'objection'
 import { RolesModel } from './roles'
@@ -6,17 +5,17 @@ import { UsersDetailsModel } from './usersDetails'
 import { TransactionsModel } from './transactions'
 
 export class UsersModel extends Model {
-  id!: UUID
+  id!: string
   email!: string
   password!: string
   id_role!: string
-  user_detail_id!: UUID
+  user_detail_id!: string
   user_active!: boolean
   otp!: string
-  otp_generated_time!: EpochTimeStamp
-  created_date!: EpochTimeStamp
-  updated_date!: EpochTimeStamp
-  deleted_date!: EpochTimeStamp
+  otp_generated_time!: Date
+  created_date!: Date
+  updated_date!: Date
+  deleted_date!: Date
 
   // types for join table or relationship
   role_name!: string

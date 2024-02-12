@@ -75,7 +75,7 @@ export class AirplaneClassController {
   }
 
   public getAirplaneClassByAirplaneId = async (
-    req: Request,
+    req: Request<IReqParams>,
     res: Response
   ): Promise<Response<any, Record<string, any>> | undefined> => {
     try {
