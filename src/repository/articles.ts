@@ -7,9 +7,7 @@ export class ArticleRepository {
   }
 
   public searchByLocation = async (location: string): Promise<ArticlesModel[]> => {
-    return await ArticlesModel.query()
-      .whereRaw(`LOWER(nama_tempat_wisata) LIKE LOWER('%${location}%')`)
-      .throwIfNotFound()
+    return await ArticlesModel.query().whereRaw(`LOWER(lokasi_wisata) LIKE LOWER('%${location}%')`).throwIfNotFound()
   }
 
   public addLike = async (id: string, like: number): Promise<ArticlesModel[]> => {
