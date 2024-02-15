@@ -2669,7 +2669,7 @@ router.get('/api/v1/wisata', authToken, articleController.getAllWisata)
  *        name: location
  *        schema:
  *          type: string
- *        description: Tempat Nama Lokasi yang digunakan sebagai kriteria pencarian
+ *        description: Lokasi Wisata yang digunakan sebagai kriteria pencarian
  *    responses:
  *      200:
  *        description: OK
