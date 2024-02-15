@@ -14,6 +14,7 @@ import { AirplaneController } from '../controllers/airplane'
 import { AirplaneClassController } from '../controllers/airplaneClass'
 import { AirplaneFlightTimeController } from '../controllers/airplaneFlightTime'
 import { TransactionController } from '../controllers/transaction'
+import { ArticleController } from '../controllers/article'
 
 const router = express.Router()
 
@@ -29,6 +30,7 @@ const airplaneController = new AirplaneController()
 const airplaneClassController = new AirplaneClassController()
 const airplaneFlightTimeController = new AirplaneFlightTimeController()
 const reportTransaction = new TransactionController()
+const articleController = new ArticleController()
 
 // list routes
 router.get('/', homeController.index)
@@ -2570,6 +2572,262 @@ router.delete('/api/v1/flightimes/airplane/:id', authToken, airplaneFlightTimeCo
  *                  example: Internal Server Error
  */
 router.get('/api/v1/transactions/report', authToken, reportTransaction.getReportTransaction)
+
+/**
+ * @openapi
+ * /api/v1/wisata:
+ *  get:
+ *    summary: Get All Wisata
+ *    description: Get All Wisata
+ *    tags:
+ *      - Wisata
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  nama_tempat_wisata:
+ *                      type: string
+ *                  deskripsi:
+ *                      type: string
+ *                  lokasi_wisata:
+ *                      type: string
+ *                  link_gambar:
+ *                      type: string
+ *                  jumlah_like:
+ *                      type: number
+ *                  created_at:
+ *                      type: date
+ *                  updated_at:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Wisata Not Found
+ *                data:
+ *                  type: array
+ *                  example: {}
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/wisata', authToken, articleController.getAllWisata)
+
+/**
+ * @openapi
+ * /api/v1/wisata/name:
+ *  get:
+ *    summary: Get Wisata By Location
+ *    description: Get Wisata By Location
+ *    tags:
+ *      - Wisata
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: query
+ *        name: location
+ *        schema:
+ *          type: string
+ *        description: Tempat Nama Lokasi yang digunakan sebagai kriteria pencarian
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  nama_tempat_wisata:
+ *                      type: string
+ *                  deskripsi:
+ *                      type: string
+ *                  lokasi_wisata:
+ *                      type: string
+ *                  link_gambar:
+ *                      type: string
+ *                  jumlah_like:
+ *                      type: number
+ *                  created_at:
+ *                      type: date
+ *                  updated_at:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Wisata Not Found
+ *                data:
+ *                  type: array
+ *                  example: {}
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.get('/api/v1/wisata/name', authToken, articleController.getWisataByLocation)
+
+/**
+ * @openapi
+ * /api/v1/wisata/add/like/{id}:
+ *  patch:
+ *    summary: Add Like Wisata By Id
+ *    description: Add Likes Wisata By Id
+ *    tags:
+ *      - Wisata
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        description: UUID dari wisata
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                 type: number
+ *                message:
+ *                 type: string
+ *                data:
+ *                 type: object
+ *                 properties:
+ *                  id:
+ *                      type: string
+ *                  nama_tempat_wisata:
+ *                      type: string
+ *                  deskripsi:
+ *                      type: string
+ *                  lokasi_wisata:
+ *                      type: string
+ *                  link_gambar:
+ *                      type: string
+ *                  jumlah_like:
+ *                      type: number
+ *                  created_at:
+ *                      type: date
+ *                  updated_at:
+ *                      type: date
+ *      401:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Invalid Token
+ *      404:
+ *        description: Not Found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: ID Wisata Not Found
+ *                data:
+ *                  type: array
+ *                  example: {}
+ *      500:
+ *        description: Internal Server Error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: number
+ *                message:
+ *                  type: string
+ *                  example: Internal Server Error
+ */
+router.patch('/api/v1/wisata/add/like/:id', authToken, articleController.addLikeWisata)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
