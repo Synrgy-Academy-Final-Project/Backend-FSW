@@ -36,4 +36,9 @@ export interface IReqBody {
   airplaneId: string
   flightTime: Date
   airplaneFlightTimePrice: number
+  like: number
+}
+
+export interface IReqQuery {
+  location: string
 }
