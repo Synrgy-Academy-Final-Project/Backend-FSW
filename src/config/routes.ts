@@ -2652,7 +2652,7 @@ router.get('/api/v1/transactions/report', authToken, reportTransaction.getReport
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/wisata', authToken, articleController.getAllWisata)
+router.get('/api/v1/wisata', articleController.getAllWisata)
 
 /**
  * @openapi
@@ -2739,7 +2739,7 @@ router.get('/api/v1/wisata', authToken, articleController.getAllWisata)
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/wisata/name', authToken, articleController.getWisataByLocation)
+router.get('/api/v1/wisata/name', articleController.getWisataByLocation)
 
 /**
  * @openapi
@@ -2836,7 +2836,7 @@ router.get('/api/v1/wisata/name', authToken, articleController.getWisataByLocati
  *                  type: string
  *                  example: Internal Server Error
  */
-router.patch('/api/v1/wisata/add/like/:id', authToken, articleController.addLikeWisata)
+router.patch('/api/v1/wisata/add/like/:id', articleController.addLikeWisata)
 
 router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
