@@ -44,8 +44,6 @@ export class ArticleController {
     try {
       const { location } = req.query
 
-      console.log(location)
-
       const wisata = await this.articleService.getWisataByLocation(location)
 
       res.status(200).json({
