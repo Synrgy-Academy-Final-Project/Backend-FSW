@@ -2758,6 +2758,15 @@ router.get('/api/v1/wisata/name', authToken, articleController.getWisataByLocati
  *          type: string
  *          format: uuid
  *        description: UUID dari wisata
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              like:
+ *               type: number
+ *               example: 100
  *    responses:
  *      200:
  *        description: OK

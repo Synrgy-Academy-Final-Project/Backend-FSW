@@ -79,9 +79,6 @@ export class ArticleController {
       const { id } = req.params
       const { like } = req.body
 
-      console.log(id)
-      console.log(like)
-
       const addLikeWisata = await this.articleService.addLikeWisata(id, like)
 
       res.status(200).json({
