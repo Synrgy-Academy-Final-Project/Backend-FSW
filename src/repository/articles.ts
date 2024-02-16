@@ -15,11 +15,12 @@ export class ArticleRepository {
       .throwIfNotFound()
   }
 
-  public addLike = async (id: string, like: number): Promise<ArticlesModel[]> => {
+  public addLike = async (id: string, like: number, updatedAt: Date): Promise<ArticlesModel[]> => {
     return await ArticlesModel.query()
       .findById(id)
       .patch({
         jumlah_like: raw(`jumlah_like + ${like}`),
+        updated_at: updatedAt,
       })
       .returning('*')
       .throwIfNotFound()
