@@ -42,3 +42,13 @@ export interface IReqBody {
 export interface IReqQuery {
   q: string
 }
+
+export type TransactionByMonth = Record<
+  string,
+  Array<{
+    statusCode: number
+    transactionStatus: string
+    transactionCount: number
+    transactionAmount: number
+  }>
+>
