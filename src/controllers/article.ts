@@ -37,18 +37,18 @@ export class ArticleController {
     }
   }
 
-  public getWisataByLocation = async (
+  public searchWisata = async (
     req: Request<unknown, unknown, unknown, IReqQuery>,
     res: Response
   ): Promise<Response<any, Record<string, any>> | undefined> => {
     try {
-      const { location } = req.query
+      const { q } = req.query
 
-      const wisata = await this.articleService.getWisataByLocation(location)
+      const wisata = await this.articleService.searchWisata(q)
 
       res.status(200).json({
         status: 200,
-        message: 'Get Wisata by Location Successfully',
+        message: 'Search Wisata Successfully',
         data: wisata,
       })
     } catch (error: any) {
