@@ -19,10 +19,13 @@ test('get wisata berdasarkan tempat wisata', async () => {
   // connect db postgres client
   Model.knex(knex(config.development))
 
-  const location = 'boro'
+  const q = 'sulawesi'
 
   const results = await ArticlesModel.query()
-    .whereRaw(`LOWER(nama_tempat_wisata) LIKE LOWER('%${location}%')`)
+    .whereRaw(`LOWER(nama_tempat_wisata) LIKE LOWER('%${q}%')`)
+    .orWhereRaw(`LOWER(lokasi_wisata) LIKE LOWER('%${q}%')`)
+    .orWhereRaw(`LOWER(deskripsi) LIKE LOWER('%${q}%')`)
+    .orderBy('nama_tempat_wisata', 'DESC')
     .throwIfNotFound()
 
   console.log(results)
