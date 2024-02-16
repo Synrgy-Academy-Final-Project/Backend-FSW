@@ -40,5 +40,5 @@ export interface IReqBody {
 }
 
 export interface IReqQuery {
-  location: string
+  q: string
 }

@@ -2656,20 +2656,20 @@ router.get('/api/v1/wisata', articleController.getAllWisata)
 
 /**
  * @openapi
- * /api/v1/wisata/name:
+ * /api/v1/wisata/search:
  *  get:
- *    summary: Get Wisata By Location
- *    description: Get Wisata By Location
+ *    summary: Search Wisata
+ *    description: Search Wisata
  *    tags:
  *      - Wisata
  *    security:
  *      - bearerAuth: []
  *    parameters:
  *      - in: query
- *        name: location
+ *        name: q
  *        schema:
  *          type: string
- *        description: Lokasi Wisata yang digunakan sebagai kriteria pencarian
+ *        description: query nama, lokasi atau deskripsi yang digunakan sebagai kriteria pencarian wisata
  *    responses:
  *      200:
  *        description: OK
@@ -2739,7 +2739,7 @@ router.get('/api/v1/wisata', articleController.getAllWisata)
  *                  type: string
  *                  example: Internal Server Error
  */
-router.get('/api/v1/wisata/name', articleController.getWisataByLocation)
+router.get('/api/v1/wisata/search', articleController.searchWisata)
 
 /**
  * @openapi

@@ -12,8 +12,8 @@ export class ArticleService {
     return await this.articleRepository.findAll()
   }
 
-  public getWisataByLocation = async (location: string): Promise<ArticlesModel[]> => {
-    return await this.articleRepository.searchByLocation(location)
+  public searchWisata = async (query: string): Promise<ArticlesModel[]> => {
+    return await this.articleRepository.search(query)
   }
 
   public addLikeWisata = async (id: string, like: number): Promise<ArticlesModel[]> => {
