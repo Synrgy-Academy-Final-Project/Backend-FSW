@@ -1,7 +1,9 @@
 import type { Request, Response } from 'express'
 
 export class HomeController {
-    public index = (_: Request, res: Response): void => {
-        res.render('home')
-    }
+  // index for ejs
+  public index = (_: Request, res: Response): void => {
+    // render file home in views
+    res.render('home')
+  }
 }
