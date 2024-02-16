@@ -17,6 +17,8 @@ export class ArticleService {
   }
 
   public addLikeWisata = async (id: string, like: number): Promise<ArticlesModel[]> => {
-    return await this.articleRepository.addLike(id, like)
+    // membuat tanggal baru untuk update
+    const updatedAt = new Date()
+    return await this.articleRepository.addLike(id, like, updatedAt)
   }
 }
