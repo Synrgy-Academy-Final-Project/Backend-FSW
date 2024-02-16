@@ -83,6 +83,8 @@ export class ArticleController {
     }
   }
 
+  // method untuk menambahkan jumlah like pada wisata
+
   public addLikeWisata = async (
     req: Request<IReqParams, unknown, IReqBody>,
     res: Response
