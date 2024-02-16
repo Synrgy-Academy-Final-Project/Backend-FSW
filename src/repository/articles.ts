@@ -6,8 +6,13 @@ export class ArticleRepository {
     return await ArticlesModel.query().throwIfNotFound()
   }
 
-  public searchByLocation = async (location: string): Promise<ArticlesModel[]> => {
-    return await ArticlesModel.query().whereRaw(`LOWER(lokasi_wisata) LIKE LOWER('%${location}%')`).throwIfNotFound()
+  public search = async (query: string): Promise<ArticlesModel[]> => {
+    return await ArticlesModel.query()
+      .whereRaw(`LOWER(nama_tempat_wisata) LIKE LOWER('%${query}%')`)
+      .orWhereRaw(`LOWER(lokasi_wisata) LIKE LOWER('%${query}%')`)
+      .orWhereRaw(`LOWER(deskripsi) LIKE LOWER('%${query}%')`)
+      .orderBy('nama_tempat_wisata', 'DESC')
+      .throwIfNotFound()
   }
 
   public addLike = async (id: string, like: number): Promise<ArticlesModel[]> => {
