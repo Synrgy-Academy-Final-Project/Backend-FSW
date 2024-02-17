@@ -27,9 +27,9 @@ export class TransactionsModel extends Model {
   deleted_date!: Date
 
   // types alias
-  airlineName?: string
+  airlineName!: string
   totalSoldoutAirline?: number
-  airplaneName?: string
+  airplaneName!: string
   totalSoldoutAirplane?: number
 
   static readonly tableName = 'transactions'

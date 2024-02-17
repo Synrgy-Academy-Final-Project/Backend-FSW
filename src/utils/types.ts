@@ -52,3 +52,15 @@ export type TransactionByMonth = Record<
     transactionAmount: number
   }>
 >
+
+export type TransactionByAirline = Record<
+  string,
+  {
+    airlineName: string
+    totalSoldout: number
+    airplanes: Array<{
+      airplaneName: string
+      totalSoldout: number
+    }>
+  }
+>
